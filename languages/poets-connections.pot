@@ -1,0 +1,239 @@
+# Copyright (C) 2022 Christian Wach
+# This file is distributed under the same license as the Football Poets Connections plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Football Poets Connections 0.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/poets-connections\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-11-11T15:40:41+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.0\n"
+"X-Domain: poets-connections\n"
+
+#. Plugin Name of the plugin
+msgid "Football Poets Connections"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "http://footballpoets.org"
+msgstr ""
+
+#. Description of the plugin
+msgid "Creates Connections between CPTs for the Football Poets site."
+msgstr ""
+
+#. Author of the plugin
+msgid "Christian Wach"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://haystack.co.uk"
+msgstr ""
+
+msgid "It looks like you don't have a main poet profile yet. Is this yours?"
+msgstr ""
+
+msgid "Is this profile one of your <em>noms de plume</em>?"
+msgstr ""
+
+msgid "Claim this profile"
+msgstr ""
+
+msgid "Create new profile"
+msgstr ""
+
+msgid "Stop claiming profiles"
+msgstr ""
+
+msgid "Your claim to this poet profile is being processed."
+msgstr ""
+
+msgid "Your primary profile as a poet"
+msgstr ""
+
+msgid "It looks like you haven't got a primary profile as a poet yet. To publish poems on this site, you're going to need one so people know who you are. Once you've created (or claimed) a primary profile, you'll be able to create (or claim) as many <em>noms de plume</em> (pen names) as you like. The real identity of your <em>noms de plume</em> will only be known by you the site editors."
+msgstr ""
+
+msgid "So let's get started!"
+msgstr ""
+
+msgid "1. If you have already posted a poem to this site"
+msgstr ""
+
+msgid "If you have already posted a poem to this site, you may find your primary profile on the site already. To find out, search for your name or <em>nom de plume</em> below. If you find your profile listed, click the name of the poet to visit their profile, check that the poems by that poet are yours and click the \"Claim this profile\" button to send a message to a site editor. If they are satisfied that you are indeed one and the same person, they will connect you with the profile you have claimed. All poems associated with that poet profile will be transferred to you."
+msgstr ""
+
+msgid "Search Poets"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "2. If you have never posted a poem to this site"
+msgstr ""
+
+msgid "If you have not posted a poem to this site before (or cannot find an existing profile by following the instructions above) fill out the form below to create a public profile of yourself as a poet. Your profile will have the name that you signed up with."
+msgstr ""
+
+#. translators: %s: The link to the User.
+msgid "%s has claimed this poet. To resolve this claim, select an option below:"
+msgstr ""
+
+msgid "Accept claim"
+msgstr ""
+
+msgid "Reject claim"
+msgstr ""
+
+msgid "Resolve"
+msgstr ""
+
+msgid "Poets"
+msgstr ""
+
+msgid "Create a new tag"
+msgstr ""
+
+msgid "Claim Resolution"
+msgstr ""
+
+msgid "Resolving..."
+msgstr ""
+
+msgid "Please choose an option"
+msgstr ""
+
+msgid "Claim resolved"
+msgstr ""
+
+msgid "Oh dear, something went wrong. No user ID was received."
+msgstr ""
+
+msgid "Oh dear, something went wrong. We couldn't find that user."
+msgstr ""
+
+msgid "Oh dear, something went wrong. No poet ID was received."
+msgstr ""
+
+msgid "Oh dear, something went wrong. We couldn't find that poet."
+msgstr ""
+
+msgid "Oh dear, something went wrong. No decision was received."
+msgstr ""
+
+msgid "Assigned poet profile"
+msgstr ""
+
+#. translators: 1: The number of the first Poem, 2: The number of the last Poem.
+msgid "Assigning poems: %1$d - %2$d"
+msgstr ""
+
+msgid "Please reload the page and try again."
+msgstr ""
+
+#. translators: %s: The name of the User.
+msgid "%s has claimed a poet"
+msgstr ""
+
+#. translators: 1: The name of the User, 2: The name of the Poet.
+msgid "%1$s has claimed the poet %2$s."
+msgstr ""
+
+#. translators: 1: The name of the User, 2: The name of the Poet, 3: The link to the User.
+msgid "To see whether %1$s has a valid claim on this poet profile, visit the \"Edit\" page for %2$s, look at the details there and accept or reject the claim. If you are not certain that the claim is valid, use this message thread to communicate with %3$s to find out more."
+msgstr ""
+
+msgid "Sending your claim..."
+msgstr ""
+
+msgid "Request sent..."
+msgstr ""
+
+msgid "Oh dear, something went wrong. No claim type was received."
+msgstr ""
+
+msgid "Thanks! Your claim has been sent. A site editor will let you know the moment your claim has been approved."
+msgstr ""
+
+msgid "Oh dear, something went wrong. No claim stopping flag was received."
+msgstr ""
+
+msgid "Thanks! You won't see this form again."
+msgstr ""
+
+#. translators: 1: The number of the first Poem, 2: The number of the last Poem.
+msgid "Assigned poems: %1$d - %2$d"
+msgstr ""
+
+msgid "Post comment as"
+msgstr ""
+
+#. translators: 1: The link to the Poet, 2: The URL of the Poem, 3: The name of the site.
+msgid "%1$s commented on a <a href=\"%2$s\">poem</a> on %3$s"
+msgstr ""
+
+msgid "Create an account to leave a comment"
+msgstr ""
+
+msgid "Login to leave a comment"
+msgstr ""
+
+#. translators: %s: The name of the Poet.
+msgid "Profile picture of %s"
+msgstr ""
+
+msgid "Poems written"
+msgstr ""
+
+msgid "Poem authors"
+msgstr ""
+
+msgid "Poet"
+msgstr ""
+
+msgid "Search poets"
+msgstr ""
+
+msgid "No poets found."
+msgstr ""
+
+msgid "Add poet"
+msgstr ""
+
+msgid "Poem"
+msgstr ""
+
+msgid "Search poems"
+msgstr ""
+
+msgid "No poems found."
+msgstr ""
+
+msgid "Add poems"
+msgstr ""
+
+msgid "User profile"
+msgstr ""
+
+msgid "Poet profile"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "Search users"
+msgstr ""
+
+msgid "No users found."
+msgstr ""
+
+msgid "Add users"
+msgstr ""
+
+#. translators: %s: The link to the Poet Profile.
+msgid "%s's profile was updated"
+msgstr ""
