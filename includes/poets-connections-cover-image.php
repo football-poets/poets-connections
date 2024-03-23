@@ -36,9 +36,18 @@ class Poets_Connections_Cover_Image {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $image_height The Cover Image height in pixels.
+	 * @var integer
 	 */
 	public $image_height = 300;
+
+	/**
+	 * Cover image URL.
+	 *
+	 * @since 0.1
+	 * @access public
+	 * @var string
+	 */
+	public $cover_image_url = '';
 
 	/**
 	 * Constructor.
@@ -151,8 +160,8 @@ class Poets_Connections_Cover_Image {
 				// Did we get one?
 				if ( ! empty( $post_thumbnail_id ) ) {
 
-				// Get URL to image.
-				$post_thumbnail_url = wp_get_attachment_url( $post_thumbnail_id );
+					// Get URL to image.
+					$post_thumbnail_url = wp_get_attachment_url( $post_thumbnail_id );
 
 					// Did we get one?
 					if ( ! empty( $post_thumbnail_url ) ) {
