@@ -1,239 +1,340 @@
-# Copyright (C) 2022 Christian Wach
+# Copyright (C) 2024 Christian Wach
 # This file is distributed under the same license as the Football Poets Connections plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Football Poets Connections 0.3\n"
+"Project-Id-Version: Football Poets Connections 0.3.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/poets-connections\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-11T15:40:41+00:00\n"
+"POT-Creation-Date: 2024-03-27T13:32:43+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: poets-connections\n"
 
 #. Plugin Name of the plugin
+#: poets-connections.php
 msgid "Football Poets Connections"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "http://footballpoets.org"
+#: poets-connections.php
+msgid "https://github.com/football-poets/poets-connections"
 msgstr ""
 
 #. Description of the plugin
+#: poets-connections.php
 msgid "Creates Connections between CPTs for the Football Poets site."
 msgstr ""
 
 #. Author of the plugin
+#: poets-connections.php
 msgid "Christian Wach"
 msgstr ""
 
 #. Author URI of the plugin
-msgid "http://haystack.co.uk"
+#: poets-connections.php
+msgid "https://haystack.co.uk"
 msgstr ""
 
+#: assets/templates/claim-form.php:19
 msgid "It looks like you don't have a main poet profile yet. Is this yours?"
 msgstr ""
 
-msgid "Is this profile one of your <em>noms de plume</em>?"
+#. translators: 1: The opening em tag, 2: The closing em tag.
+#: assets/templates/claim-form.php:25
+msgid "Is this profile one of your %1$snoms de plume%2$s?"
 msgstr ""
 
+#: assets/templates/claim-form.php:37
 msgid "Claim this profile"
 msgstr ""
 
+#: assets/templates/claim-form.php:39
 msgid "Create new profile"
 msgstr ""
 
+#: assets/templates/claim-form.php:42
 msgid "Stop claiming profiles"
 msgstr ""
 
+#: assets/templates/claim-pending.php:15
+#: includes/poets-connections-claim.php:353
 msgid "Your claim to this poet profile is being processed."
 msgstr ""
 
+#: assets/templates/profile-form.php:15
 msgid "Your primary profile as a poet"
 msgstr ""
 
-msgid "It looks like you haven't got a primary profile as a poet yet. To publish poems on this site, you're going to need one so people know who you are. Once you've created (or claimed) a primary profile, you'll be able to create (or claim) as many <em>noms de plume</em> (pen names) as you like. The real identity of your <em>noms de plume</em> will only be known by you the site editors."
+#. translators: 1: The opening em tag, 2: The closing em tag.
+#: assets/templates/profile-form.php:21
+msgid "It looks like you haven't got a primary profile as a poet yet. To publish poems on this site, you're going to need one so people know who you are. Once you've created (or claimed) a primary profile, you'll be able to create (or claim) as many %1$snoms de plume%2$s (pen names) as you like. The real identity of your %1$snoms de plume%2$s will only be known by you the site editors. %1$sSo let's get started!%2$s"
 msgstr ""
 
-msgid "So let's get started!"
-msgstr ""
-
+#: assets/templates/profile-form.php:28
 msgid "1. If you have already posted a poem to this site"
 msgstr ""
 
-msgid "If you have already posted a poem to this site, you may find your primary profile on the site already. To find out, search for your name or <em>nom de plume</em> below. If you find your profile listed, click the name of the poet to visit their profile, check that the poems by that poet are yours and click the \"Claim this profile\" button to send a message to a site editor. If they are satisfied that you are indeed one and the same person, they will connect you with the profile you have claimed. All poems associated with that poet profile will be transferred to you."
+#. translators: 1: The opening em tag, 2: The closing em tag.
+#: assets/templates/profile-form.php:34
+msgid "If you have already posted a poem to this site, you may find your primary profile on the site already. To find out, search for your name or %1$snom de plume%2$s below. If you find your profile listed, click the name of the poet to visit their profile, check that the poems by that poet are yours and click the \"Claim this profile\" button to send a message to a site editor. If they are satisfied that you are indeed one and the same person, they will connect you with the profile you have claimed. All poems associated with that poet profile will be transferred to you."
 msgstr ""
 
+#: assets/templates/profile-form.php:42
+#: assets/templates/profile-form.php:45
 msgid "Search Poets"
 msgstr ""
 
+#: assets/templates/profile-form.php:46
 msgid "Search"
 msgstr ""
 
+#: assets/templates/profile-form.php:50
 msgid "2. If you have never posted a poem to this site"
 msgstr ""
 
+#: assets/templates/profile-form.php:52
 msgid "If you have not posted a poem to this site before (or cannot find an existing profile by following the instructions above) fill out the form below to create a public profile of yourself as a poet. Your profile will have the name that you signed up with."
 msgstr ""
 
 #. translators: %s: The link to the User.
+#: assets/templates/resolve-form.php:27
 msgid "%s has claimed this poet. To resolve this claim, select an option below:"
 msgstr ""
 
+#: assets/templates/resolve-form.php:37
 msgid "Accept claim"
 msgstr ""
 
+#: assets/templates/resolve-form.php:41
 msgid "Reject claim"
 msgstr ""
 
+#: assets/templates/resolve-form.php:47
 msgid "Resolve"
 msgstr ""
 
+#: includes/poets-connections-buddyforms.php:147
+#: includes/poets-connections-buddyforms.php:150
 msgid "Poets"
 msgstr ""
 
+#: includes/poets-connections-buddyforms.php:396
 msgid "Create a new tag"
 msgstr ""
 
+#: includes/poets-connections-claim-resolve.php:116
+#: includes/poets-connections-claim.php:485
 msgid "Claim Resolution"
 msgstr ""
 
+#: includes/poets-connections-claim-resolve.php:172
+#: includes/poets-connections-claim.php:541
 msgid "Resolving..."
 msgstr ""
 
+#: includes/poets-connections-claim-resolve.php:173
+#: includes/poets-connections-claim.php:542
 msgid "Please choose an option"
 msgstr ""
 
+#: includes/poets-connections-claim-resolve.php:174
+#: includes/poets-connections-claim.php:543
 msgid "Claim resolved"
 msgstr ""
 
+#: includes/poets-connections-claim-resolve.php:234
+#: includes/poets-connections-claim.php:291
+#: includes/poets-connections-claim.php:409
+#: includes/poets-connections-claim.php:601
 msgid "Oh dear, something went wrong. No user ID was received."
 msgstr ""
 
+#: includes/poets-connections-claim-resolve.php:240
+#: includes/poets-connections-claim.php:297
+#: includes/poets-connections-claim.php:415
+#: includes/poets-connections-claim.php:607
 msgid "Oh dear, something went wrong. We couldn't find that user."
 msgstr ""
 
+#: includes/poets-connections-claim-resolve.php:246
+#: includes/poets-connections-claim.php:303
+#: includes/poets-connections-claim.php:613
 msgid "Oh dear, something went wrong. No poet ID was received."
 msgstr ""
 
+#: includes/poets-connections-claim-resolve.php:252
+#: includes/poets-connections-claim.php:309
+#: includes/poets-connections-claim.php:619
 msgid "Oh dear, something went wrong. We couldn't find that poet."
 msgstr ""
 
+#: includes/poets-connections-claim-resolve.php:258
+#: includes/poets-connections-claim.php:625
 msgid "Oh dear, something went wrong. No decision was received."
 msgstr ""
 
+#: includes/poets-connections-claim-resolve.php:283
+#: includes/poets-connections-claim.php:650
 msgid "Assigned poet profile"
 msgstr ""
 
 #. translators: 1: The number of the first Poem, 2: The number of the last Poem.
+#: includes/poets-connections-claim-resolve.php:317
 msgid "Assigning poems: %1$d - %2$d"
 msgstr ""
 
+#: includes/poets-connections-claim-resolve.php:329
+#: includes/poets-connections-claim.php:358
+#: includes/poets-connections-claim.php:439
+#: includes/poets-connections-claim.php:693
 msgid "Please reload the page and try again."
 msgstr ""
 
 #. translators: %s: The name of the User.
+#: includes/poets-connections-claim-resolve.php:705
+#: includes/poets-connections-claim.php:1248
 msgid "%s has claimed a poet"
 msgstr ""
 
 #. translators: 1: The name of the User, 2: The name of the Poet.
+#: includes/poets-connections-claim-resolve.php:709
+#: includes/poets-connections-claim.php:1252
 msgid "%1$s has claimed the poet %2$s."
 msgstr ""
 
 #. translators: 1: The name of the User, 2: The name of the Poet, 3: The link to the User.
+#: includes/poets-connections-claim-resolve.php:713
+#: includes/poets-connections-claim.php:1256
 msgid "To see whether %1$s has a valid claim on this poet profile, visit the \"Edit\" page for %2$s, look at the details there and accept or reject the claim. If you are not certain that the claim is valid, use this message thread to communicate with %3$s to find out more."
 msgstr ""
 
+#: includes/poets-connections-claim.php:229
 msgid "Sending your claim..."
 msgstr ""
 
+#: includes/poets-connections-claim.php:230
 msgid "Request sent..."
 msgstr ""
 
+#: includes/poets-connections-claim.php:315
 msgid "Oh dear, something went wrong. No claim type was received."
 msgstr ""
 
+#: includes/poets-connections-claim.php:350
 msgid "Thanks! Your claim has been sent. A site editor will let you know the moment your claim has been approved."
 msgstr ""
 
+#: includes/poets-connections-claim.php:421
 msgid "Oh dear, something went wrong. No claim stopping flag was received."
 msgstr ""
 
+#: includes/poets-connections-claim.php:431
 msgid "Thanks! You won't see this form again."
 msgstr ""
 
 #. translators: 1: The number of the first Poem, 2: The number of the last Poem.
+#: includes/poets-connections-claim.php:681
 msgid "Assigned poems: %1$d - %2$d"
 msgstr ""
 
+#: includes/poets-connections-comments.php:171
 msgid "Post comment as"
 msgstr ""
 
 #. translators: 1: The link to the Poet, 2: The URL of the Poem, 3: The name of the site.
+#: includes/poets-connections-comments.php:286
+#: includes/poets-connections-comments.php:376
 msgid "%1$s commented on a <a href=\"%2$s\">poem</a> on %3$s"
 msgstr ""
 
+#: includes/poets-connections-comments.php:472
 msgid "Create an account to leave a comment"
 msgstr ""
 
+#: includes/poets-connections-comments.php:474
 msgid "Login to leave a comment"
 msgstr ""
 
 #. translators: %s: The name of the Poet.
+#: includes/poets-connections-comments.php:657
+#: includes/poets-connections-functions.php:355
+#: includes/poets-connections-functions.php:413
 msgid "Profile picture of %s"
 msgstr ""
 
+#: includes/poets-connections-config.php:154
 msgid "Poems written"
 msgstr ""
 
+#: includes/poets-connections-config.php:155
 msgid "Poem authors"
 msgstr ""
 
+#: includes/poets-connections-config.php:158
+#: includes/poets-connections-config.php:189
 msgid "Poet"
 msgstr ""
 
+#: includes/poets-connections-config.php:159
+#: includes/poets-connections-config.php:190
 msgid "Search poets"
 msgstr ""
 
+#: includes/poets-connections-config.php:160
+#: includes/poets-connections-config.php:191
 msgid "No poets found."
 msgstr ""
 
+#: includes/poets-connections-config.php:161
+#: includes/poets-connections-config.php:192
 msgid "Add poet"
 msgstr ""
 
+#: includes/poets-connections-config.php:164
 msgid "Poem"
 msgstr ""
 
+#: includes/poets-connections-config.php:165
 msgid "Search poems"
 msgstr ""
 
+#: includes/poets-connections-config.php:166
 msgid "No poems found."
 msgstr ""
 
+#: includes/poets-connections-config.php:167
 msgid "Add poems"
 msgstr ""
 
+#: includes/poets-connections-config.php:185
 msgid "User profile"
 msgstr ""
 
+#: includes/poets-connections-config.php:186
 msgid "Poet profile"
 msgstr ""
 
+#: includes/poets-connections-config.php:195
 msgid "User"
 msgstr ""
 
+#: includes/poets-connections-config.php:196
 msgid "Search users"
 msgstr ""
 
+#: includes/poets-connections-config.php:197
 msgid "No users found."
 msgstr ""
 
+#: includes/poets-connections-config.php:198
 msgid "Add users"
 msgstr ""
 
 #. translators: %s: The link to the Poet Profile.
+#: includes/poets-connections-profile-sync.php:556
 msgid "%s's profile was updated"
 msgstr ""
