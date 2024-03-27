@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Football Poets Connections
- * Plugin URI: http://footballpoets.org
  * Description: Creates Connections between CPTs for the Football Poets site.
- * Author: Christian Wach
- * Version: 0.3.1
- * Author URI: https://haystack.co.uk
+ * Plugin URI:  https://github.com/football-poets/poets-connections
+ * Version:     0.3.1
+ * Author:      Christian Wach
+ * Author URI:  https://haystack.co.uk
  * Text Domain: poets-connections
  * Domain Path: /languages
  *
