@@ -3,7 +3,7 @@
  * Plugin Name: Football Poets Connections
  * Description: Creates Connections between CPTs for the Football Poets site.
  * Plugin URI:  https://github.com/football-poets/poets-connections
- * Version:     0.3.1
+ * Version:     0.3.2a
  * Author:      Christian Wach
  * Author URI:  https://haystack.co.uk
  * Text Domain: poets-connections
@@ -16,7 +16,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // Set our version here.
-define( 'POETS_CONNECTIONS_VERSION', '0.3.1' );
+define( 'POETS_CONNECTIONS_VERSION', '0.3.2a' );
 
 // Store reference to this file.
 if ( ! defined( 'POETS_CONNECTIONS_FILE' ) ) {
