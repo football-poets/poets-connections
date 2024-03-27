@@ -325,12 +325,12 @@ class Poets_Connections_BuddyForms {
 	public function field_save( $poem_id ) {
 
 		/*
-		 * I have hard-coded 'publish_as' for now - but this really needs to be
-		 * retrieved dynamically from the form fields.
+		 * I have hard-coded 'publish_as' in the BuddyForm for now - but this really
+		 * needs to be retrieved dynamically from the form fields.
 		 */
 
 		// Get Poet ID.
-		$poet_id = isset( $_POST['publish_as'] ) ? absint( $_POST['publish_as'] ) : '';
+		$poet_id = isset( $_POST['publish_as'] ) ? (int) sanitize_text_field( wp_unslash( $_POST['publish_as'] ) ) : 0;
 
 		/*
 		// Logging.

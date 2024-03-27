@@ -190,7 +190,9 @@ function poets_connections_get_poet_avatar() {
 		if ( $connected_poet instanceof WP_Post ) {
 
 			// Show Primary avatar but link to Poet.
-			?><a href="<?php echo get_permalink( $connected_poet->ID ); ?>"><?php bp_activity_avatar(); ?></a><?php
+			?>
+			<a href="<?php echo get_permalink( $connected_poet->ID ); ?>"><?php bp_activity_avatar(); ?></a>
+			<?php
 
 			// We're done.
 			return;
@@ -200,7 +202,9 @@ function poets_connections_get_poet_avatar() {
 	}
 
 	// Fall back to standard avatar.
-	?><a href="<?php bp_activity_user_link(); ?>"><?php bp_activity_avatar(); ?></a><?php
+	?>
+	<a href="<?php bp_activity_user_link(); ?>"><?php bp_activity_avatar(); ?></a>
+	<?php
 
 }
 
@@ -256,7 +260,9 @@ function poets_connections_get_poet_avatar_poem_new( $item ) {
 	}
 
 	// All other cases.
-	?><a href="<?php bp_activity_user_link(); ?>"><?php bp_activity_avatar(); ?></a><?php
+	?>
+	<a href="<?php bp_activity_user_link(); ?>"><?php bp_activity_avatar(); ?></a>
+	<?php
 
 }
 
@@ -293,7 +299,9 @@ function poets_connections_get_poet_avatar_poem_comment_new( $item ) {
 	}
 
 	// All other cases.
-	?><a href="<?php bp_activity_user_link(); ?>"><?php bp_activity_avatar(); ?></a><?php
+	?>
+	<a href="<?php bp_activity_user_link(); ?>"><?php bp_activity_avatar(); ?></a>
+	<?php
 
 }
 
@@ -371,7 +379,9 @@ function poets_connections_poet_avatar_render( $primary_poet, $poet ) {
 	) {
 
 		// Show Primary avatar but link to Poet.
-		?><a href="<?php echo get_permalink( $poet->ID ); ?>"><?php bp_activity_avatar(); ?></a><?php
+		?>
+		<a href="<?php echo get_permalink( $poet->ID ); ?>"><?php bp_activity_avatar(); ?></a>
+		<?php
 
 		// We're done.
 		return;

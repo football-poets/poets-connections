@@ -19,7 +19,14 @@ defined( 'ABSPATH' ) || exit;
 				<?php esc_html_e( 'It looks like you don\'t have a main poet profile yet. Is this yours?', 'poets-connections' ); ?>
 				<input type="hidden" id="claim_type" value="primary" />
 			<?php else : ?>
-				<?php _e( 'Is this profile one of your <em>noms de plume</em>?', 'poets-connections' ); ?>
+				<?php
+				echo sprintf(
+					/* translators: 1: The opening em tag, 2: The closing em tag. */
+					esc_html__( 'Is this profile one of your %1$snoms de plume%2$s?', 'poets-connections' ),
+					'<em>',
+					'</em>'
+				);
+				?>
 				<input type="hidden" id="claim_type" value="standard" />
 			<?php endif; ?>
 			</p>
