@@ -25,7 +25,7 @@ class Poets_Connections_BuddyForms {
 	 *
 	 * @since 0.3
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var Poets_Connections_Plugin
 	 */
 	public $plugin;
 
@@ -34,11 +34,11 @@ class Poets_Connections_BuddyForms {
 	 *
 	 * @since 0.3
 	 *
-	 * @param object $plugin A reference to the plugin object.
+	 * @param Poets_Connections_Plugin $plugin A reference to the plugin object.
 	 */
-	public function __construct( $plugin = null ) {
+	public function __construct( $plugin ) {
 
-		// Store reference to "parent".
+		// Store reference to plugin.
 		$this->plugin = $plugin;
 
 	}
@@ -144,10 +144,10 @@ class Poets_Connections_BuddyForms {
 
 		// Add a custom element to the dropdown.
 		$select_elements['poets'] = [
-			'label'     => __( 'Poets', 'poets-connections' ),
-			'fields'    => [
-				'poet'     => [
-					'label'     => __( 'Poets', 'poets-connections' ),
+			'label'  => __( 'Poets', 'poets-connections' ),
+			'fields' => [
+				'poet' => [
+					'label' => __( 'Poets', 'poets-connections' ),
 				],
 			],
 		];
@@ -163,8 +163,8 @@ class Poets_Connections_BuddyForms {
 	 * @since 0.3
 	 *
 	 * @param array $form_fields The existing form fields.
-	 * @param str $field_type The field type.
-	 * @param int $field_id The field ID.
+	 * @param str   $field_type The field type.
+	 * @param int   $field_id The field ID.
 	 * @return array $form_fields The modified form fields.
 	 */
 	public function field_inspect( $form_fields, $field_type, $field_id ) {
@@ -193,9 +193,9 @@ class Poets_Connections_BuddyForms {
 	 * @since 0.3
 	 *
 	 * @param array $form_fields The existing form fields.
-	 * @param str $form_slug The form slug.
-	 * @param str $field_type The field type.
-	 * @param int $field_id The field ID.
+	 * @param str   $form_slug The form slug.
+	 * @param str   $field_type The field type.
+	 * @param int   $field_id The field ID.
 	 * @return array $form_fields The modified form fields.
 	 */
 	public function field_add( $form_fields, $form_slug, $field_type, $field_id ) {
@@ -225,29 +225,29 @@ class Poets_Connections_BuddyForms {
 	 * @since 0.3
 	 *
 	 * @param array $form The existing form.
-	 * @param str $form_args The form arguments.
+	 * @param str   $form_args The form arguments.
 	 * @return array $form The modified form.
 	 */
 	public function field_render( $form, $form_args ) {
 
 		// Only handle our form.
-		if ( 'poems' != $form_args['form_slug'] ) {
+		if ( 'poems' !== $form_args['form_slug'] ) {
 			return $form;
 		}
 
 		// Only handle our form type.
-		if ( 'poet' != sanitize_title( $form_args['customfield']['type'] ) ) {
+		if ( 'poet' !== sanitize_title( $form_args['customfield']['type'] ) ) {
 			return $form;
 		}
 
 		// Init args.
 		$poets_args = [
-			'post_type' => 'poet',
-			'post_status' => 'publish',
-			'author' => get_current_user_id(),
-			'orderby' => 'title',
-			'order' => 'ASC',
-			'nopaging' => true,
+			'post_type'     => 'poet',
+			'post_status'   => 'publish',
+			'author'        => get_current_user_id(),
+			'orderby'       => 'title',
+			'order'         => 'ASC',
+			'nopaging'      => true,
 			'no_found_rows' => true,
 		];
 
@@ -360,15 +360,15 @@ class Poets_Connections_BuddyForms {
 	 *
 	 * @since 0.3
 	 *
-	 * @param str $title The existing title.
-	 * @param str $form_slug The form slug.
+	 * @param str   $title The existing title.
+	 * @param str   $form_slug The form slug.
 	 * @param array $customfield The custom field.
 	 * @return str $title The modified title.
 	 */
 	public function filter_tax_title( $title, $form_slug, $customfield ) {
 
 		// Only handle our form.
-		if ( 'poems' != $form_slug ) {
+		if ( 'poems' !== $form_slug ) {
 			return $title;
 		}
 
@@ -376,7 +376,7 @@ class Poets_Connections_BuddyForms {
 		if ( ! isset( $customfield['taxonomy'] ) ) {
 			return $title;
 		}
-		if ( 'poemtag' != $customfield['taxonomy'] ) {
+		if ( 'poemtag' !== $customfield['taxonomy'] ) {
 			return $title;
 		}
 

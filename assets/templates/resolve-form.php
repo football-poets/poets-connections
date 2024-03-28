@@ -13,7 +13,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<?php if ( $claim_type == 'primary' ) : ?>
+<?php if ( 'primary' === $claim_type ) : ?>
 	<input type="hidden" id="claim_type" value="primary" />
 <?php else : ?>
 	<input type="hidden" id="claim_type" value="standard" />

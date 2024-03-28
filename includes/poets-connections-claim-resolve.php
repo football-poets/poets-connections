@@ -27,7 +27,7 @@ class Poets_Connections_Resolve_Form {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var Poets_Connections_Plugin
 	 */
 	public $plugin;
 
@@ -36,7 +36,7 @@ class Poets_Connections_Resolve_Form {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var str $resolve_callback The AJAX callback for resolving a Claim.
+	 * @var string
 	 */
 	public $resolve_callback = 'claim_process';
 
@@ -45,7 +45,7 @@ class Poets_Connections_Resolve_Form {
 	 *
 	 * @since 0.2
 	 * @access public
-	 * @var str $import_step The number of items per batch.
+	 * @var string
 	 */
 	public $batch_step = 10;
 
@@ -54,7 +54,7 @@ class Poets_Connections_Resolve_Form {
 	 *
 	 * @since 0.2
 	 * @access public
-	 * @var str $batch_key The database key for the batching process.
+	 * @var string
 	 */
 	public $batch_key = '_poets_resolution_step';
 
@@ -63,11 +63,11 @@ class Poets_Connections_Resolve_Form {
 	 *
 	 * @since 0.1
 	 *
-	 * @param object $plugin A reference to the plugin object.
+	 * @param Poets_Connections_Plugin $plugin A reference to the plugin object.
 	 */
-	public function __construct( $plugin = null ) {
+	public function __construct( $plugin ) {
 
-		// Store reference to "parent".
+		// Store reference to plugin.
 		$this->plugin = $plugin;
 
 	}
@@ -169,24 +169,24 @@ class Poets_Connections_Resolve_Form {
 
 		// Init localisation.
 		$localisation = [
-			'sending' => __( 'Resolving...', 'poets-connections' ),
-			'choose' => __( 'Please choose an option', 'poets-connections' ),
+			'sending'  => __( 'Resolving...', 'poets-connections' ),
+			'choose'   => __( 'Please choose an option', 'poets-connections' ),
 			'finished' => __( 'Claim resolved', 'poets-connections' ),
 		];
 
 		// Init settings.
 		$settings = [
-			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'spinner_url' => POETS_CONNECTIONS_URL . '/assets/images/ajax-loader.gif',
+			'ajax_url'      => admin_url( 'admin-ajax.php' ),
+			'spinner_url'   => POETS_CONNECTIONS_URL . '/assets/images/ajax-loader.gif',
 			'ajax_callback' => $this->resolve_callback,
-			'post_id' => $post->ID,
-			'user_id' => $user_id,
+			'post_id'       => $post->ID,
+			'user_id'       => $user_id,
 		];
 
 		// Localisation array.
 		$vars = [
 			'localisation' => $localisation,
-			'settings' => $settings,
+			'settings'     => $settings,
 		];
 
 		// Localise.
@@ -213,8 +213,8 @@ class Poets_Connections_Resolve_Form {
 		// Init AJAX return.
 		$data = [
 			'message' => '',
-			'error' => '',
-			'status' => '',
+			'error'   => '',
+			'status'  => '',
 		];
 
 		/*
@@ -269,7 +269,6 @@ class Poets_Connections_Resolve_Form {
 
 				// First step.
 				case 0:
-
 					// Set finished flag.
 					$data['finished'] = 'false';
 
@@ -412,10 +411,10 @@ class Poets_Connections_Resolve_Form {
 		}
 
 		// Check for revision.
-		if ( $post_obj->post_type == 'revision' ) {
+		if ( 'revision' === $post_obj->post_type ) {
 
 			// Get parent.
-			if ( $post_obj->post_parent != 0 ) {
+			if ( 0 !== (int) $post_obj->post_parent ) {
 				$post = get_post( $post_obj->post_parent );
 			} else {
 				$post = $post_obj;
@@ -426,7 +425,7 @@ class Poets_Connections_Resolve_Form {
 		}
 
 		// Bail if not Poem Post Type.
-		if ( $post->post_type != 'poet' ) {
+		if ( 'poet' !== $post->post_type ) {
 			return;
 		}
 
@@ -456,8 +455,8 @@ class Poets_Connections_Resolve_Form {
 		$choice = sanitize_text_field( wp_unslash( $_POST['claim_resolved'] ) );
 
 		// If successful, resolve Claim.
-		$decision = ( $choice == 'accept' ) ? 'success' : 'failure';
-		if ( $decision == 'success' ) {
+		$decision = ( 'accept' === $choice ) ? 'success' : 'failure';
+		if ( 'success' === $decision ) {
 
 			// Claim type?
 
@@ -506,7 +505,7 @@ class Poets_Connections_Resolve_Form {
 		}
 
 		// If Primary.
-		if ( $claim_type == 'primary' ) {
+		if ( 'primary' === $claim_type ) {
 
 			// Flag User as having a Primary Profile.
 			bp_update_user_meta( $user_id, '_poet_connections_' . $this->plugin->config->primary_key, $poet_id );
@@ -515,9 +514,8 @@ class Poets_Connections_Resolve_Form {
 			add_post_meta( $poet_id, '_poet_connections_' . $this->plugin->config->primary_key, $user_id, true );
 
 			// Create connection.
-			p2p_type( 'poets_to_users' )->connect( $poet_id, $user_id, [
-				'date' => current_time( 'mysql' ),
-			] );
+			$args = [ 'date' => current_time( 'mysql' ) ];
+			p2p_type( 'poets_to_users' )->connect( $poet_id, $user_id, $args );
 
 		}
 
@@ -526,10 +524,11 @@ class Poets_Connections_Resolve_Form {
 		remove_action( 'save_post', [ $this->plugin->profile_sync, 'save_post' ], 100, 2 );
 
 		// Set author of Poet Profile.
-		wp_update_post( [
-			'ID' => $poet_id,
+		$args = [
+			'ID'          => $poet_id,
 			'post_author' => $user_id,
-		] );
+		];
+		wp_update_post( $args );
 
 		// Sync to User.
 		$this->plugin->profile_sync->update_user( $poet_id, $user_id );
@@ -563,7 +562,7 @@ class Poets_Connections_Resolve_Form {
 			$claimed_poet_ids = array_diff( $claimed_poet_ids, [ $poet_id ] );
 
 			// If there are none left.
-			if ( count( $claimed_poet_ids ) == 0 ) {
+			if ( count( $claimed_poet_ids ) === 0 ) {
 
 				// Delete Claim User meta.
 				bp_delete_user_meta( $user_id, '_poet_connections_' . $this->plugin->config->claim_key );
@@ -617,10 +616,10 @@ class Poets_Connections_Resolve_Form {
 
 		// Define query args.
 		$query_args = [
-			'connected_type' => 'poets_to_poems',
+			'connected_type'  => 'poets_to_poems',
 			'connected_items' => get_post( $post_id ),
-			'post_per_page' => $this->batch_step,
-			'paged' => $step,
+			'post_per_page'   => $this->batch_step,
+			'paged'           => $step,
 		];
 
 		/*
@@ -659,10 +658,11 @@ class Poets_Connections_Resolve_Form {
 				*/
 
 				// Assign author.
-				wp_update_post( [
-					'ID' => get_the_ID(),
+				$args = [
+					'ID'          => get_the_ID(),
 					'post_author' => $user_id,
-				] );
+				];
+				wp_update_post( $args );
 
 			}
 
@@ -695,8 +695,8 @@ class Poets_Connections_Resolve_Form {
 		$user_link = bp_core_get_userlink( $user_id );
 
 		// Link to claimed Poet.
-		$poet_name = esc_html( get_the_title( $poet_id ) );
-		$poet_link = '<a href="' . get_permalink( $poet_id ) . '">' . $poet_name . '</a>';
+		$poet_name      = esc_html( get_the_title( $poet_id ) );
+		$poet_link      = '<a href="' . get_permalink( $poet_id ) . '">' . $poet_name . '</a>';
 		$poet_edit_link = '<a href="' . get_edit_post_link( $poet_id, 'display' ) . '">' . $poet_name . '</a>';
 
 		// Define subject.
@@ -706,7 +706,7 @@ class Poets_Connections_Resolve_Form {
 
 		// Build content.
 		/* translators: 1: The name of the User, 2: The name of the Poet. */
-		$content = sprintf( __( '%1$s has claimed the poet %2$s.', 'poets-connections' ), $user_link, $poet_link );
+		$content  = sprintf( __( '%1$s has claimed the poet %2$s.', 'poets-connections' ), $user_link, $poet_link );
 		$content .= "\n\n";
 		$content .= sprintf(
 			/* translators: 1: The name of the User, 2: The name of the Poet, 3: The link to the User. */
@@ -751,7 +751,7 @@ class Poets_Connections_Resolve_Form {
 	private function get_step() {
 
 		// If the step value doesn't exist.
-		if ( 'fgffgs' == get_option( $this->batch_key, 'fgffgs' ) ) {
+		if ( 'fgffgs' === get_option( $this->batch_key, 'fgffgs' ) ) {
 
 			// Start at the beginning.
 			$step = 0;
@@ -818,10 +818,10 @@ class Poets_Connections_Resolve_Form {
 
 		// Define query args.
 		$query_args = [
-			'connected_type' => 'poets_to_poems',
+			'connected_type'  => 'poets_to_poems',
 			'connected_items' => get_post( $poet_id ),
-			'nopaging' => true,
-			'no_found_rows' => true,
+			'nopaging'        => true,
+			'no_found_rows'   => true,
 		];
 
 		// The query.
@@ -844,10 +844,11 @@ class Poets_Connections_Resolve_Form {
 				*/
 
 				// Make the User the author.
-				wp_update_post( [
-					'ID' => get_the_ID(),
+				$args = [
+					'ID'          => get_the_ID(),
 					'post_author' => $user_id,
-				] );
+				];
+				wp_update_post( $args );
 
 			}
 		}

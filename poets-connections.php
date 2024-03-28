@@ -18,6 +18,11 @@ defined( 'ABSPATH' ) || exit;
 // Set our version here.
 define( 'POETS_CONNECTIONS_VERSION', '0.3.2a' );
 
+// Set our debug flag here.
+if ( ! defined( 'POETS_CONNECTIONS_DEBUG' ) ) {
+	define( 'POETS_CONNECTIONS_DEBUG', false );
+}
+
 // Store reference to this file.
 if ( ! defined( 'POETS_CONNECTIONS_FILE' ) ) {
 	define( 'POETS_CONNECTIONS_FILE', __FILE__ );
@@ -47,7 +52,7 @@ class Poets_Connections_Plugin {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $config The Config object.
+	 * @var Poets_Connections_Config
 	 */
 	public $config;
 
@@ -56,7 +61,7 @@ class Poets_Connections_Plugin {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $claim The Poet Profile Claim object.
+	 * @var Poets_Connections_Claim
 	 */
 	public $claim;
 
@@ -65,7 +70,7 @@ class Poets_Connections_Plugin {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $profile_sync The Member Profile Form object.
+	 * @var object Poets_Connections_Profile_Sync
 	 */
 	public $profile_sync;
 
@@ -74,7 +79,7 @@ class Poets_Connections_Plugin {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $cover_image The Cover Image object.
+	 * @var Poets_Connections_Cover_Image
 	 */
 	public $cover_image;
 
@@ -83,7 +88,7 @@ class Poets_Connections_Plugin {
 	 *
 	 * @since 0.3
 	 * @access public
-	 * @var object $buddyforms The BuddyForms compatibility object.
+	 * @var Poets_Connections_BuddyForms
 	 */
 	public $buddyforms;
 
@@ -92,7 +97,7 @@ class Poets_Connections_Plugin {
 	 *
 	 * @since 0.3
 	 * @access public
-	 * @var object $comments The Comments compatibility object.
+	 * @var Poets_Connections_Comments
 	 */
 	public $comments;
 
@@ -103,76 +108,50 @@ class Poets_Connections_Plugin {
 	 */
 	public function __construct() {
 
-		// Include files.
+		// Bootstrap plugin.
 		$this->include_files();
-
-		// Setup globals.
 		$this->setup_globals();
-
-		// Register hooks.
 		$this->register_hooks();
 
 	}
 
 	/**
-	 * Include files.
+	 * Includes files.
 	 *
 	 * @since 0.1
 	 */
 	public function include_files() {
 
-		// Include Config class.
+		// Include class files.
 		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-config.php';
-
-		// Include Claim class.
 		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-claim.php';
-
-		// Include Profile Sync class.
 		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-profile-sync.php';
-
-		// Include Cover Image class.
 		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-cover-image.php';
-
-		// Include BuddyForms file.
 		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-buddyforms.php';
-
-		// Include Comments file.
 		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-comments.php';
-
-		// Include functions file.
 		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-functions.php';
 
 	}
 
 	/**
-	 * Set up objects.
+	 * Sets up objects.
 	 *
 	 * @since 0.1
 	 */
 	public function setup_globals() {
 
-		// Init Config object.
-		$this->config = new Poets_Connections_Config( $this );
-
-		// Init Poet Profile Claim object.
-		$this->claim = new Poets_Connections_Claim( $this );
-
-		// Init Profile Sync object.
+		// Instatiate objects.
+		$this->config       = new Poets_Connections_Config( $this );
+		$this->claim        = new Poets_Connections_Claim( $this );
 		$this->profile_sync = new Poets_Connections_Profile_Sync( $this );
-
-		// Init Cover Image object.
-		$this->cover_image = new Poets_Connections_Cover_Image( $this );
-
-		// Init BuddyForms object.
-		$this->buddyforms = new Poets_Connections_BuddyForms( $this );
-
-		// Init Comments object.
-		$this->comments = new Poets_Connections_Comments( $this );
+		$this->cover_image  = new Poets_Connections_Cover_Image( $this );
+		$this->buddyforms   = new Poets_Connections_BuddyForms( $this );
+		$this->comments     = new Poets_Connections_Comments( $this );
 
 	}
 
 	/**
-	 * Register WordPress hooks.
+	 * Registers hook callbacks.
 	 *
 	 * @since 0.1
 	 */
@@ -192,7 +171,7 @@ class Poets_Connections_Plugin {
 	}
 
 	/**
-	 * Load translation if present.
+	 * Loads translation.
 	 *
 	 * @since 0.1
 	 */
@@ -209,7 +188,7 @@ class Poets_Connections_Plugin {
 	}
 
 	/**
-	 * Perform plugin activation tasks.
+	 * Performs plugin activation tasks.
 	 *
 	 * @since 0.1
 	 */
@@ -218,11 +197,40 @@ class Poets_Connections_Plugin {
 	}
 
 	/**
-	 * Perform plugin deactivation tasks.
+	 * Performs plugin deactivation tasks.
 	 *
 	 * @since 0.1
 	 */
 	public function deactivate() {
+
+	}
+
+	/**
+	 * Write to the error log.
+	 *
+	 * @since 0.3.2
+	 *
+	 * @param array $data The data to write to the log file.
+	 */
+	public function log_error( $data = [] ) {
+
+		// Skip if not debugging.
+		if ( POETS_CONNECTIONS_DEBUG === false ) {
+			return;
+		}
+
+		// Skip if empty.
+		if ( empty( $data ) ) {
+			return;
+		}
+
+		// Format data.
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+		$error = print_r( $data, true );
+
+		// Write to log file.
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		error_log( $error );
 
 	}
 
@@ -243,7 +251,7 @@ function poets_connections() {
 	return $poets_connections;
 }
 
-// Instantiate the class.
+// Bootstrap plugin immediately.
 poets_connections();
 
 // Activation.

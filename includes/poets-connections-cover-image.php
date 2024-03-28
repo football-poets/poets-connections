@@ -25,7 +25,7 @@ class Poets_Connections_Cover_Image {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var Poets_Connections_Plugin
 	 */
 	public $plugin;
 
@@ -54,11 +54,11 @@ class Poets_Connections_Cover_Image {
 	 *
 	 * @since 0.1
 	 *
-	 * @param object $plugin A reference to the plugin object.
+	 * @param Poets_Connections_Plugin $plugin A reference to the plugin object.
 	 */
-	public function __construct( $plugin = null ) {
+	public function __construct( $plugin ) {
 
-		// Store reference to "parent".
+		// Store reference to plugin.
 		$this->plugin = $plugin;
 
 	}
@@ -351,7 +351,7 @@ class Poets_Connections_Cover_Image {
 		if ( ! isset( $post->post_type ) ) {
 			return $has_image;
 		}
-		if ( $post->post_type != 'poet' ) {
+		if ( 'poet' !== $post->post_type ) {
 			return $has_image;
 		}
 
@@ -364,7 +364,7 @@ class Poets_Connections_Cover_Image {
 		$user = $this->plugin->config->get_primary_user( $post );
 
 		// Bail if we didn't get one.
-		if ( $user === false ) {
+		if ( false === $user ) {
 			return $has_image;
 		}
 
@@ -402,7 +402,7 @@ class Poets_Connections_Cover_Image {
 	 *
 	 * @since 0.1
 	 *
-	 * @param str $html The existing Feature Image markup.
+	 * @param str     $html The existing Feature Image markup.
 	 * @param WP_Post $post The WordPress Post object.
 	 * @return str $html The modified Feature Image markup.
 	 */

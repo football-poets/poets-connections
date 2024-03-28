@@ -25,7 +25,7 @@ function poets_connections_poet_has_pending_claim( $poet_id ) {
 	$pc = poets_connections();
 
 	// Get claiming User IDs for this Poet.
-	$user_id = get_post_meta( $poet_id, $pc->config->claim_key, true );
+	$user_id         = get_post_meta( $poet_id, $pc->config->claim_key, true );
 	$primary_user_id = get_post_meta( $poet_id, $pc->config->claim_primary_key, true );
 
 	// Return false if there's no Claim.
@@ -113,7 +113,7 @@ function poets_connections_poet_is_claimed_as_primary_by_user( $poet_id, $user_i
 	}
 
 	// Return false if the Claim is not from the current User.
-	if ( $claiming_user_id != $user_id ) {
+	if ( (int) $claiming_user_id !== (int) $user_id ) {
 		return false;
 	}
 
@@ -166,19 +166,19 @@ function poets_connections_get_poet_avatar() {
 	*/
 
 	// Filter Poems.
-	if ( $current_activity_item->type == 'new_poem' ) {
+	if ( 'new_poem' === $current_activity_item->type ) {
 		poets_connections_get_poet_avatar_poem_new( $current_activity_item );
 		return;
 	}
 
 	// Filter Poem comments.
-	if ( $current_activity_item->type == 'new_poem_comment' ) {
+	if ( 'new_poem_comment' === $current_activity_item->type ) {
 		poets_connections_get_poet_avatar_poem_comment_new( $current_activity_item );
 		return;
 	}
 
 	// Filter Profile updates.
-	if ( $current_activity_item->type == 'updated_profile' ) {
+	if ( 'updated_profile' === $current_activity_item->type ) {
 
 		// Get plugin.
 		$pc = poets_connections();
@@ -310,8 +310,8 @@ function poets_connections_get_poet_avatar_poem_comment_new( $item ) {
  *
  * @since 0.3
  *
- * @param obj $primary_poet The Primary Poet object.
- * @param obj $poet The Poet object.
+ * @param WP_Post $primary_poet The Primary Poet object.
+ * @param WP_Post $poet The Poet object.
  * @return str $avatar The Poet avatar wrapped in an anchor tag.
  */
 function poets_connections_poet_avatar_get( $primary_poet, $poet ) {
@@ -325,7 +325,7 @@ function poets_connections_poet_avatar_get( $primary_poet, $poet ) {
 	}
 
 	// If it is the Primary Poet.
-	if ( $poet->ID == $primary_poet->ID ) {
+	if ( $poet->ID === $primary_poet->ID ) {
 
 		// Show Primary avatar but link to Poet.
 		$avatar = '<a href="' . get_permalink( $poet->ID ) . '">' . bp_get_activity_avatar() . '</a>';
@@ -352,9 +352,9 @@ function poets_connections_poet_avatar_get( $primary_poet, $poet ) {
 	// Fall back to mystery man.
 	$src = POETS_CONNECTIONS_URL . '/assets/images/subbuteo-shakespeare-mid.jpg';
 	/* translators: %s: The name of the Poet. */
-	$alt = sprintf( __( 'Profile picture of %s', 'poets-connections' ), get_the_title( $poet ) );
+	$alt            = sprintf( __( 'Profile picture of %s', 'poets-connections' ), get_the_title( $poet ) );
 	$post_thumbnail = '<img src="' . $src . '" class="avatar avatar-50" width="50" height="50" alt="' . $alt . '" />';
-	$avatar = '<a href="' . get_permalink( $poet->ID ) . '">' . $post_thumbnail . '</a>';
+	$avatar         = '<a href="' . get_permalink( $poet->ID ) . '">' . $post_thumbnail . '</a>';
 
 	// --<
 	return $avatar;
@@ -366,8 +366,8 @@ function poets_connections_poet_avatar_get( $primary_poet, $poet ) {
  *
  * @since 0.3
  *
- * @param obj $primary_poet The Primary Poet object.
- * @param obj $poet The Poet object.
+ * @param WP_Post $primary_poet The Primary Poet object.
+ * @param WP_Post $poet The Poet object.
  */
 function poets_connections_poet_avatar_render( $primary_poet, $poet ) {
 
@@ -375,7 +375,7 @@ function poets_connections_poet_avatar_render( $primary_poet, $poet ) {
 	if (
 		$primary_poet instanceof WP_Post &&
 		$poet instanceof WP_Post &&
-		$poet->ID == $primary_poet->ID
+		$poet->ID === $primary_poet->ID
 	) {
 
 		// Show Primary avatar but link to Poet.
@@ -398,7 +398,7 @@ function poets_connections_poet_avatar_render( $primary_poet, $poet ) {
 		if ( ! empty( $post_thumbnail ) ) {
 
 			// Show it.
-			echo '<a href="' . get_permalink( $poet->ID ) . '">' . $post_thumbnail . '</a>';
+			echo '<a href="' . esc_url( get_permalink( $poet->ID ) ) . '">' . $post_thumbnail . '</a>';
 
 			// We're done.
 			return;
@@ -410,8 +410,8 @@ function poets_connections_poet_avatar_render( $primary_poet, $poet ) {
 	// Fall back to mystery man.
 	$src = POETS_CONNECTIONS_URL . '/assets/images/subbuteo-shakespeare-mid.jpg';
 	/* translators: %s: The name of the Poet. */
-	$alt = sprintf( __( 'Profile picture of %s', 'poets-connections' ), get_the_title( $poet ) );
+	$alt            = sprintf( __( 'Profile picture of %s', 'poets-connections' ), get_the_title( $poet ) );
 	$post_thumbnail = '<img src="' . $src . '" class="avatar avatar-50" width="50" height="50" alt="' . $alt . '" />';
-	echo '<a href="' . get_permalink( $poet ) . '">' . $post_thumbnail . '</a>';
+	echo '<a href="' . esc_url( get_permalink( $poet ) ) . '">' . $post_thumbnail . '</a>';
 
 }

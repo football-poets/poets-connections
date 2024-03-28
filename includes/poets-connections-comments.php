@@ -26,7 +26,7 @@ class Poets_Connections_Comments {
 	 *
 	 * @since 0.3
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var Poets_Connections_Plugin
 	 */
 	public $plugin;
 
@@ -41,7 +41,7 @@ class Poets_Connections_Comments {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var array $generic_user_id The ID of the "Football Poets" User.
+	 * @var integer
 	 */
 	public $generic_user_id = 5;
 
@@ -50,11 +50,11 @@ class Poets_Connections_Comments {
 	 *
 	 * @since 0.3
 	 *
-	 * @param object $plugin A reference to the plugin object.
+	 * @param Poets_Connections_Plugin $plugin A reference to the plugin object.
 	 */
-	public function __construct( $plugin = null ) {
+	public function __construct( $plugin ) {
 
-		// Store reference to "parent".
+		// Store reference to plugin.
 		$this->plugin = $plugin;
 
 	}
@@ -141,12 +141,12 @@ class Poets_Connections_Comments {
 
 		// Init args.
 		$poets_args = [
-			'post_type' => 'poet',
-			'post_status' => 'publish',
-			'author' => get_current_user_id(),
-			'orderby' => 'title',
-			'order' => 'ASC',
-			'nopaging' => true,
+			'post_type'     => 'poet',
+			'post_status'   => 'publish',
+			'author'        => get_current_user_id(),
+			'orderby'       => 'title',
+			'order'         => 'ASC',
+			'nopaging'      => true,
 			'no_found_rows' => true,
 		];
 
@@ -254,7 +254,7 @@ class Poets_Connections_Comments {
 	public function custom_comment_activity( $activity ) {
 
 		// Only deal with comments.
-		if ( ( $activity->type != 'new_poem_comment' ) ) {
+		if ( 'new_poem_comment' !== $activity->type ) {
 			return $activity;
 		}
 
@@ -270,7 +270,7 @@ class Poets_Connections_Comments {
 		$poet = get_post( $poet_id );
 
 		// Bail if we don't get a valid Poet.
-		if ( is_null( $poet ) ) {
+		if ( ! ( $poet instanceof WP_Post ) ) {
 			return $activity;
 		}
 
@@ -278,7 +278,7 @@ class Poets_Connections_Comments {
 		$title = get_the_title( $poet->ID );
 
 		// Construct Poet Profile link.
-		$poet_link = '<a href="' . get_permalink( $poet->ID ) . '" title="' . esc_attr( $title ) . '">' . $title . '</a>';
+		$poet_link = '<a href="' . esc_url( get_permalink( $poet->ID ) ) . '" title="' . esc_attr( $title ) . '">' . esc_html( $title ) . '</a>';
 
 		// Overwrite the action.
 		$activity->action = sprintf(
@@ -293,7 +293,7 @@ class Poets_Connections_Comments {
 		$primary_poet = $this->plugin->config->get_primary_poet( $activity->user_id );
 
 		// If we get one and it's not the commenter's Primary Profile.
-		if ( ( $primary_poet instanceof WP_Post ) && ( $poet->ID != $primary_poet->ID ) ) {
+		if ( ( $primary_poet instanceof WP_Post ) && $poet->ID !== $primary_poet->ID ) {
 
 			// Assign activity item to generic Football Poets User.
 			$activity->user_id = $this->generic_user_id;
@@ -329,21 +329,21 @@ class Poets_Connections_Comments {
 	 *
 	 * @since 0.3
 	 *
-	 * @param str $action The existing activity action.
+	 * @param str    $action The existing activity action.
 	 * @param object $activity The soon-to-be-saved activity object, passed by reference.
 	 * @return str $action The modified activity action.
 	 */
 	public function custom_comment_action( $action, $activity ) {
 
 		// Only deal with comments.
-		if ( ( $activity->type != 'new_poem_comment' ) ) {
+		if ( 'new_poem_comment' !== $activity->type ) {
 			return $action;
 		}
 
 		// Get Poet ID from POST.
 		$poet_id = $this->get_poet_id_from_comment_form();
 
-		//if no Poet found in POST, we may be rendering the item.
+		// If no Poet found in POST, we may be rendering the item.
 		if ( false === $poet_id ) {
 
 			// Get Poet ID from comment meta.
@@ -428,6 +428,7 @@ class Poets_Connections_Comments {
 
 		return $link;
 
+		/*
 		// Our custom activity types.
 		$types = [ 'new_poem_comment' ];
 
@@ -435,6 +436,7 @@ class Poets_Connections_Comments {
 		if ( ! in_array( $type, $types ) ) {
 			return $link;
 		}
+		*/
 
 		/*
 		// Old code.
@@ -448,8 +450,10 @@ class Poets_Connections_Comments {
 		'</a>';
 		*/
 
+		/*
 		// --<
 		return bp_get_activity_feed_item_link();
+		*/
 
 	}
 
@@ -535,8 +539,8 @@ class Poets_Connections_Comments {
 	 *
 	 * @since 0.3
 	 *
-	 * @param string $author The comment author's username.
-	 * @param int $comment_id The comment ID.
+	 * @param string     $author The comment author's username.
+	 * @param int        $comment_id The comment ID.
 	 * @param WP_Comment $comment The comment object.
 	 */
 	public function override_comment_author( $author, $comment_id, $comment ) {
@@ -567,12 +571,12 @@ class Poets_Connections_Comments {
 	 *
 	 * @since 0.3
 	 *
-	 * @param string $avatar The avatar path passed to 'get_avatar'.
+	 * @param string            $avatar The avatar path passed to 'get_avatar'.
 	 * @param int|string|object $comment A User ID, email address, or comment object.
-	 * @param int $size Size of the avatar image ('thumb' or 'full').
-	 * @param string $default URL to a default image to use if no avatar is available.
-	 * @param string $alt Alternate text to use in image tag. Default: ''.
-	 * @param array $args Arguments passed to get_avatar_data(), after processing.
+	 * @param int               $size Size of the avatar image ('thumb' or 'full').
+	 * @param string            $default URL to a default image to use if no avatar is available.
+	 * @param string            $alt Alternate text to use in image tag. Default: ''.
+	 * @param array             $args Arguments passed to get_avatar_data(), after processing.
 	 * @return string $avatar The avatar path if found, else the original avatar path.
 	 */
 	public function override_comment_avatar( $avatar, $comment, $size, $default, $alt = '', $args = [] ) {
@@ -636,7 +640,7 @@ class Poets_Connections_Comments {
 		*/
 
 		// If this is the Primary Poet keep Profile avatar.
-		if ( $poet->ID == $primary_poet->ID ) {
+		if ( $poet->ID === $primary_poet->ID ) {
 			return $avatar;
 		}
 
@@ -654,9 +658,9 @@ class Poets_Connections_Comments {
 		// Fall back to mystery man.
 		$src = POETS_CONNECTIONS_URL . '/assets/images/subbuteo-shakespeare-mid.jpg';
 		/* translators: %s: The name of the Poet. */
-		$alt = sprintf( __( 'Profile picture of %s', 'poets-connections' ), get_the_title( $poet ) );
+		$alt            = sprintf( __( 'Profile picture of %s', 'poets-connections' ), get_the_title( $poet ) );
 		$post_thumbnail = '<img src="' . $src . '" class="avatar avatar-50" width="36" height="36" alt="' . $alt . '" />';
-		$avatar = '<a href="' . get_permalink( $poet->ID ) . '">' . $post_thumbnail . '</a>';
+		$avatar         = '<a href="' . get_permalink( $poet->ID ) . '">' . $post_thumbnail . '</a>';
 
 		// --<
 		return $avatar;

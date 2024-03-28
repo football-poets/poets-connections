@@ -25,7 +25,7 @@ class Poets_Connections_Config {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var Poets_Connections_Plugin
 	 */
 	public $plugin;
 
@@ -39,7 +39,7 @@ class Poets_Connections_Config {
 	 *
 	 * @since 0.2
 	 * @access public
-	 * @var str $claim_user_id The Profile Claim meta key.
+	 * @var string
 	 */
 	public $claim_key = '_poet_connections_claim_user_id';
 
@@ -53,7 +53,7 @@ class Poets_Connections_Config {
 	 *
 	 * @since 0.2
 	 * @access public
-	 * @var str $claim_primary_key The Primary Profile Claim meta key.
+	 * @var string
 	 */
 	public $claim_primary_key = '_poet_connections_claim_primary';
 
@@ -65,7 +65,7 @@ class Poets_Connections_Config {
 	 *
 	 * @since 0.2
 	 * @access public
-	 * @var str $primary_key The Primary Profile User meta key.
+	 * @var string
 	 */
 	public $primary_key = '_poet_connections_primary';
 
@@ -74,7 +74,7 @@ class Poets_Connections_Config {
 	 *
 	 * @since 0.2
 	 * @access public
-	 * @var str $claim_disable_key The no further Profile Claims meta key.
+	 * @var string
 	 */
 	public $claim_disable_key = '_poet_connections_claim_disable';
 
@@ -83,7 +83,7 @@ class Poets_Connections_Config {
 	 *
 	 * @since 0.3
 	 * @access public
-	 * @var str $comment_key The comment meta key that hold the Poet Profile ID.
+	 * @var string
 	 */
 	public $comment_key = '_poet_connections_profile_id';
 
@@ -92,11 +92,11 @@ class Poets_Connections_Config {
 	 *
 	 * @since 0.1
 	 *
-	 * @param object $plugin A reference to the plugin object.
+	 * @param Poets_Connections_Plugin $plugin A reference to the plugin object.
 	 */
-	public function __construct( $plugin = null ) {
+	public function __construct( $plugin ) {
 
-		// Store reference to "parent".
+		// Store reference to plugin.
 		$this->plugin = $plugin;
 
 	}
@@ -146,27 +146,29 @@ class Poets_Connections_Config {
 		 * This is a many-to-many connection because Poets can have many Poems
 		 * and Poems can be written by multiple Poets as "joint authors".
 		 */
-		p2p_register_connection_type( [
-			'name' => 'poets_to_poems',
-			'from' => 'poet',
-			'to' => 'poem',
-			'title' => [
+		$args = [
+			'name'        => 'poets_to_poems',
+			'from'        => 'poet',
+			'to'          => 'poem',
+			'title'       => [
 				'from' => __( 'Poems written', 'poets-connections' ),
-				'to' => __( 'Poem authors', 'poets-connections' ),
+				'to'   => __( 'Poem authors', 'poets-connections' ),
 			],
 			'from_labels' => [
 				'singular_name' => __( 'Poet', 'poets-connections' ),
-				'search_items' => __( 'Search poets', 'poets-connections' ),
-				'not_found' => __( 'No poets found.', 'poets-connections' ),
-				'create' => __( 'Add poet', 'poets-connections' ),
+				'search_items'  => __( 'Search poets', 'poets-connections' ),
+				'not_found'     => __( 'No poets found.', 'poets-connections' ),
+				'create'        => __( 'Add poet', 'poets-connections' ),
 			],
-			'to_labels' => [
+			'to_labels'   => [
 				'singular_name' => __( 'Poem', 'poets-connections' ),
-				'search_items' => __( 'Search poems', 'poets-connections' ),
-				'not_found' => __( 'No poems found.', 'poets-connections' ),
-				'create' => __( 'Add poems', 'poets-connections' ),
+				'search_items'  => __( 'Search poems', 'poets-connections' ),
+				'not_found'     => __( 'No poems found.', 'poets-connections' ),
+				'create'        => __( 'Add poems', 'poets-connections' ),
 			],
-		] );
+		];
+
+		p2p_register_connection_type( $args );
 
 		/**
 		 * Connect Poets and members as "primary".
@@ -176,28 +178,30 @@ class Poets_Connections_Config {
 		 * that they are the author of the Poet Profile. Only Primary Profiles
 		 * have this connection, however.
 		 */
-		p2p_register_connection_type( [
-			'name' => 'poets_to_users',
-			'from' => 'poet',
-			'to' => 'user',
+		$args = [
+			'name'        => 'poets_to_users',
+			'from'        => 'poet',
+			'to'          => 'user',
 			'cardinality' => 'one-to-one',
-			'title' => [
+			'title'       => [
 				'from' => __( 'User profile', 'poets-connections' ),
-				'to' => __( 'Poet profile', 'poets-connections' ),
+				'to'   => __( 'Poet profile', 'poets-connections' ),
 			],
 			'from_labels' => [
 				'singular_name' => __( 'Poet', 'poets-connections' ),
-				'search_items' => __( 'Search poets', 'poets-connections' ),
-				'not_found' => __( 'No poets found.', 'poets-connections' ),
-				'create' => __( 'Add poet', 'poets-connections' ),
+				'search_items'  => __( 'Search poets', 'poets-connections' ),
+				'not_found'     => __( 'No poets found.', 'poets-connections' ),
+				'create'        => __( 'Add poet', 'poets-connections' ),
 			],
-			'to_labels' => [
+			'to_labels'   => [
 				'singular_name' => __( 'User', 'poets-connections' ),
-				'search_items' => __( 'Search users', 'poets-connections' ),
-				'not_found' => __( 'No users found.', 'poets-connections' ),
-				'create' => __( 'Add users', 'poets-connections' ),
+				'search_items'  => __( 'Search users', 'poets-connections' ),
+				'not_found'     => __( 'No users found.', 'poets-connections' ),
+				'create'        => __( 'Add users', 'poets-connections' ),
 			],
-		] );
+		];
+
+		p2p_register_connection_type( $args );
 
 	}
 
@@ -219,9 +223,8 @@ class Poets_Connections_Config {
 		add_post_meta( $poet_id, $this->primary_key, $user_id, true );
 
 		// Create connection.
-		p2p_type( 'poets_to_users' )->connect( $poet_id, $user_id, [
-			'date' => current_time( 'mysql' ),
-		] );
+		$args = [ 'date' => current_time( 'mysql' ) ];
+		p2p_type( 'poets_to_users' )->connect( $poet_id, $user_id, $args );
 
 		// --<
 		return true;
@@ -273,7 +276,7 @@ class Poets_Connections_Config {
 
 		// Define args.
 		$connected_user_args = [
-			'connected_type' => 'poets_to_users',
+			'connected_type'  => 'poets_to_users',
 			'connected_items' => $poet,
 		];
 
@@ -308,10 +311,10 @@ class Poets_Connections_Config {
 
 		// Construct args to get the current User's Poet Post.
 		$args = [
-			'connected_type' => 'poets_to_users',
-			'connected_items' => new WP_User( $user_id ),
+			'connected_type'   => 'poets_to_users',
+			'connected_items'  => new WP_User( $user_id ),
 			'suppress_filters' => false,
-			'nopaging' => true,
+			'nopaging'         => true,
 		];
 
 		// Get all Posts (though there will only be one).
@@ -342,10 +345,10 @@ class Poets_Connections_Config {
 
 		// Define query args.
 		$query_args = [
-			'connected_type' => 'poets_to_poems',
+			'connected_type'  => 'poets_to_poems',
 			'connected_items' => get_post( $poem_id ),
-			'nopaging' => true,
-			'no_found_rows' => true,
+			'nopaging'        => true,
+			'no_found_rows'   => true,
 		];
 
 		// The query.
@@ -373,9 +376,8 @@ class Poets_Connections_Config {
 	public function connect_poet_and_poem( $poet_id, $poem_id ) {
 
 		// Create connection.
-		p2p_type( 'poets_to_poems' )->connect( $poet_id, $poem_id, [
-			'date' => current_time( 'mysql' ),
-		] );
+		$args = [ 'date' => current_time( 'mysql' ) ];
+		p2p_type( 'poets_to_poems' )->connect( $poet_id, $poem_id, $args );
 
 		// Always true for now.
 		return true;

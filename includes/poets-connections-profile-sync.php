@@ -33,7 +33,7 @@ class Poets_Connections_Profile_Sync {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $parent_obj The plugin object.
+	 * @var Poets_Connections_Plugin
 	 */
 	public $plugin;
 
@@ -42,7 +42,7 @@ class Poets_Connections_Profile_Sync {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var array $about_id The ID of the "about" field.
+	 * @var integer
 	 */
 	public $about_id = 4;
 
@@ -51,7 +51,7 @@ class Poets_Connections_Profile_Sync {
 	 *
 	 * @since 0.2
 	 * @access public
-	 * @var array $twitter_id The ID of the "twitter" field.
+	 * @var integer
 	 */
 	public $twitter_id = 6;
 
@@ -60,7 +60,7 @@ class Poets_Connections_Profile_Sync {
 	 *
 	 * @since 0.2
 	 * @access public
-	 * @var array $website_id The ID of the "website" field.
+	 * @var integer
 	 */
 	public $website_id = 7;
 
@@ -69,11 +69,11 @@ class Poets_Connections_Profile_Sync {
 	 *
 	 * @since 0.1
 	 *
-	 * @param object $plugin A reference to the plugin object.
+	 * @param Poets_Connections_Plugin $plugin A reference to the plugin object.
 	 */
-	public function __construct( $plugin = null ) {
+	public function __construct( $plugin ) {
 
-		// Store reference to "parent".
+		// Store reference to plugin.
 		$this->plugin = $plugin;
 
 	}
@@ -120,12 +120,12 @@ class Poets_Connections_Profile_Sync {
 		}
 
 		// Bail if not Group 2.
-		if ( 2 != bp_get_current_profile_group_id() ) {
+		if ( 2 !== bp_get_current_profile_group_id() ) {
 			return;
 		}
 
 		// Allow super admins to edit others.
-		if ( get_current_user_id() != bp_displayed_user_id() ) {
+		if ( get_current_user_id() !== bp_displayed_user_id() ) {
 			return;
 		}
 
@@ -133,7 +133,7 @@ class Poets_Connections_Profile_Sync {
 		$poet = $this->plugin->config->get_primary_poet( get_current_user_id() );
 
 		// Bail if they are already connected to a "Poet".
-		if ( $poet !== false ) {
+		if ( false !== $poet ) {
 			return;
 		}
 
@@ -231,10 +231,10 @@ class Poets_Connections_Profile_Sync {
 		}
 
 		// Check for revision.
-		if ( $post_obj->post_type == 'revision' ) {
+		if ( 'revision' === $post_obj->post_type ) {
 
 			// Get parent.
-			if ( $post_obj->post_parent != 0 ) {
+			if ( 0 !== (int) $post_obj->post_parent ) {
 				$post = get_post( $post_obj->post_parent );
 			} else {
 				$post = $post_obj;
@@ -245,7 +245,7 @@ class Poets_Connections_Profile_Sync {
 		}
 
 		// Bail if not Poet Post Type.
-		if ( $post->post_type != 'poet' ) {
+		if ( 'poet' !== $post->post_type ) {
 			return;
 		}
 
@@ -255,7 +255,7 @@ class Poets_Connections_Profile_Sync {
 		$user = $this->plugin->config->get_primary_user( $post );
 
 		// Bail if we didn't get one.
-		if ( $user === false ) {
+		if ( false === $user ) {
 			return;
 		}
 
@@ -284,7 +284,7 @@ class Poets_Connections_Profile_Sync {
 		}
 
 		// Bail if not Poet Post Type.
-		if ( $post->post_type != 'poet' ) {
+		if ( 'poet' !== $post->post_type ) {
 			return;
 		}
 
@@ -308,9 +308,9 @@ class Poets_Connections_Profile_Sync {
 	 *
 	 * @since 0.1
 	 *
-	 * @param int $user_id The WordPress User ID.
+	 * @param int   $user_id The WordPress User ID.
 	 * @param array $posted_field_ids The IDs of the Fields being saved.
-	 * @param bool $errors True if there are errors, false otherwise.
+	 * @param bool  $errors True if there are errors, false otherwise.
 	 */
 	public function update_poet( $user_id, $posted_field_ids, $errors ) {
 
@@ -321,7 +321,7 @@ class Poets_Connections_Profile_Sync {
 
 		// Bail if we don't.
 		if ( empty( $user_id ) ) {
-			return false;
+			return;
 		}
 
 		// Get "Primary Poet Profile" Post.
@@ -331,19 +331,19 @@ class Poets_Connections_Profile_Sync {
 		remove_action( 'save_post', [ $this, 'save_post_intercept' ], 100, 2 );
 
 		// If we don't have a Poet yet.
-		if ( $poet === false ) {
+		if ( false === $poet ) {
 
 			// Create a fresh Poet Profile.
-			$poet = new stdClass();
-			$poet->post_status = 'publish';
-			$poet->post_type = 'poet';
-			$poet->post_parent = 0;
-			$poet->comment_status = 'closed';
-			$poet->ping_status = 'closed';
-			$poet->to_ping = ''; // Quick fix for Windows.
-			$poet->pinged = ''; // Quick fix for Windows.
+			$poet                        = new stdClass();
+			$poet->post_status           = 'publish';
+			$poet->post_type             = 'poet';
+			$poet->post_parent           = 0;
+			$poet->comment_status        = 'closed';
+			$poet->ping_status           = 'closed';
+			$poet->to_ping               = ''; // Quick fix for Windows.
+			$poet->pinged                = ''; // Quick fix for Windows.
 			$poet->post_content_filtered = ''; // Quick fix for Windows.
-			$poet->post_excerpt = ''; // Quick fix for Windows.
+			$poet->post_excerpt          = ''; // Quick fix for Windows.
 
 			// Post title is User fullname.
 			$poet->post_title = bp_get_displayed_user_fullname();
@@ -398,12 +398,12 @@ class Poets_Connections_Profile_Sync {
 			$value = xprofile_get_field_data( $this->twitter_id, $user_id );
 
 			// Strip @ symbol if present.
-			if ( substr( $value, 0, 1 ) == '@' ) {
+			if ( substr( $value, 0, 1 ) === '@' ) {
 				$value = substr( $value, 1 );
 			}
 
 			// Strip https://twitter.com/ if present.
-			if ( substr( $value, 0, 20 ) == 'https://twitter.com/' ) {
+			if ( substr( $value, 0, 20 ) === 'https://twitter.com/' ) {
 				$value = substr( $value, 20 );
 			}
 
@@ -434,7 +434,7 @@ class Poets_Connections_Profile_Sync {
 	 * @since 0.1
 	 *
 	 * @param int|WP_Post $post_id The ID of the Post (or the Post object).
-	 * @param int $user_id The WordPress User ID.
+	 * @param int         $user_id The WordPress User ID.
 	 */
 	public function update_user( $post_id, $user_id ) {
 
@@ -492,8 +492,8 @@ class Poets_Connections_Profile_Sync {
 	 * @since 0.2
 	 *
 	 * @param WP_Post $post The WordPress Post object.
-	 * @param string $key The meta key.
-	 * @param mixed $data The data to be saved.
+	 * @param string  $key The meta key.
+	 * @param mixed   $data The data to be saved.
 	 * @return mixed $data The data that was saved.
 	 */
 	private function save_meta( $post, $key, $data = '' ) {
@@ -522,7 +522,7 @@ class Poets_Connections_Profile_Sync {
 	 *
 	 * @since 0.2
 	 *
-	 * @param str $action The existing action string.
+	 * @param str    $action The existing action string.
 	 * @param object $activity The existing activity object.
 	 * @return str $action The modified action string.
 	 */
@@ -618,7 +618,7 @@ class Poets_Connections_Profile_Sync {
 		foreach ( $nav_items as $key => $item ) {
 
 			// If not on own Profile.
-			if ( bp_displayed_user_id() != bp_loggedin_user_id() ) {
+			if ( bp_displayed_user_id() !== bp_loggedin_user_id() ) {
 
 				// Get current object.
 				$obj = $bp->members->nav->get( $item );
@@ -632,7 +632,7 @@ class Poets_Connections_Profile_Sync {
 					// Resave.
 					$bp->members->nav->edit_nav( [ 'name' => $title ], $item );
 
-				} else {
+				} else { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedElse
 
 					/*
 					// Logging.
@@ -659,9 +659,8 @@ class Poets_Connections_Profile_Sync {
 			switch ( $item ) {
 
 				case 'my-poems':
-
 					// Remove from User's own Profile if they have no Primary Poet.
-					if ( bp_displayed_user_id() == bp_loggedin_user_id() ) {
+					if ( bp_displayed_user_id() === bp_loggedin_user_id() ) {
 						if ( false === $this->plugin->config->get_primary_poet( bp_loggedin_user_id() ) ) {
 							$unset[] = $item;
 						}
@@ -671,13 +670,11 @@ class Poets_Connections_Profile_Sync {
 							$unset[] = $item;
 						}
 					}
-
 					break;
 
 				case 'my-poets':
-
 					// Remove from User's own Profile if they have no Primary Poet.
-					if ( bp_displayed_user_id() == bp_loggedin_user_id() ) {
+					if ( bp_displayed_user_id() === bp_loggedin_user_id() ) {
 						if ( false === $this->plugin->config->get_primary_poet( bp_loggedin_user_id() ) ) {
 							$unset[] = $item;
 						}
@@ -687,7 +684,6 @@ class Poets_Connections_Profile_Sync {
 							$unset[] = $item;
 						}
 					}
-
 					break;
 
 			}
