@@ -24,8 +24,8 @@ defined( 'ABSPATH' ) || exit;
 
 	echo sprintf(
 		/* translators: %s: The link to the User. */
-		__( '%s has claimed this poet. To resolve this claim, select an option below:', 'poets-connections' ),
-		$user_link
+		esc_html__( '%s has claimed this poet. To resolve this claim, select an option below:', 'poets-connections' ),
+		esc_url( $user_link )
 	);
 
 	?>

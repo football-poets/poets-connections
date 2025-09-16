@@ -70,7 +70,7 @@ class Poets_Connections_Plugin {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object Poets_Connections_Profile_Sync
+	 * @var Poets_Connections_Profile_Sync
 	 */
 	public $profile_sync;
 
@@ -241,14 +241,14 @@ class Poets_Connections_Plugin {
  *
  * @since 0.1
  *
- * @return obj $poets_connections The plugin object.
+ * @return Poets_Connections_Plugin $plugin The plugin object.
  */
 function poets_connections() {
-	static $poets_connections;
-	if ( ! isset( $poets_connections ) ) {
-		$poets_connections = new Poets_Connections_Plugin();
+	static $plugin;
+	if ( ! isset( $plugin ) ) {
+		$plugin = new Poets_Connections_Plugin();
 	}
-	return $poets_connections;
+	return $plugin;
 }
 
 // Bootstrap plugin immediately.

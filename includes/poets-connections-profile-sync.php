@@ -374,8 +374,21 @@ class Poets_Connections_Profile_Sync {
 		], true ) );
 		*/
 
+		// Make sure we have an array.
+		if ( ! is_array( $posted_field_ids ) ) {
+			$posted_field_ids = [];
+		}
+
+		// Make sure array contains integers.
+		array_walk(
+			$posted_field_ids,
+			function( &$item ) {
+				$item = (int) $item;
+			}
+		);
+
 		// Look for the "about" field ID.
-		if ( in_array( $this->about_id, $posted_field_ids ) ) {
+		if ( in_array( $this->about_id, $posted_field_ids, true ) ) {
 
 			// Get the field's content.
 			$content = xprofile_get_field_data( $this->about_id, $user_id );
@@ -389,7 +402,7 @@ class Poets_Connections_Profile_Sync {
 		}
 
 		// Look for the "Twitter" field ID.
-		if ( in_array( $this->twitter_id, $posted_field_ids ) ) {
+		if ( in_array( $this->twitter_id, $posted_field_ids, true ) ) {
 
 			// Get meta key.
 			$db_key = poets_poets()->metaboxes->twitter_meta_key;
@@ -413,7 +426,7 @@ class Poets_Connections_Profile_Sync {
 		}
 
 		// Look for the "website" field ID.
-		if ( in_array( $this->website_id, $posted_field_ids ) ) {
+		if ( in_array( $this->website_id, $posted_field_ids, true ) ) {
 
 			// Get meta key.
 			$db_key = poets_poets()->metaboxes->website_meta_key;

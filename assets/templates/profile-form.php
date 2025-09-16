@@ -40,7 +40,7 @@ defined( 'ABSPATH' ) || exit;
 
 	<div class="poet-search">
 		<h3><?php esc_html_e( 'Search Poets', 'poets-connections' ); ?></h3>
-		<form role="search" action="<?php echo get_post_type_archive_link( 'poet' ); ?>" method="get" id="searchform">
+		<form role="search" action="<?php echo esc_url( get_post_type_archive_link( 'poet' ) ); ?>" method="get" id="searchform">
 			<input type="hidden" name="post_type" value="poet" />
 			<input type="text" name="s" placeholder="<?php esc_attr_e( 'Search Poets', 'poets-connections' ); ?>"/>
 			<input type="submit" alt="<?php esc_attr_e( 'Search', 'poets-connections' ); ?>" value="<?php esc_attr_e( 'Search', 'poets-connections' ); ?>" />

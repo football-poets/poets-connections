@@ -11,22 +11,20 @@
 
 	<rule ref="WordPress">
 
-		<!-- I prefer slash-delimited hook names. -->
+		<!-- Allow slash-delimited hook names. -->
 		<exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
 
 		<!-- I prefer my control structures. -->
 		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.BlankLineAfterEnd" />
 
-		<!-- PSR4: Allow my file names. -->
+		<!-- PSR4: Allow short file names. -->
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 
-		<!-- Allow code blocks. -->
-		<exclude name="Squiz.Commenting.BlockComment.HasEmptyLineBefore" />
+		<!-- Allow example code blocks. -->
 		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
+		<exclude name="Squiz.Commenting.BlockComment.HasEmptyLineBefore" />
 
 		<!-- Outstanding rules to apply. -->
-		<exclude name="WordPress.PHP.StrictInArray.MissingTrueStrict" />
-		<exclude name="WordPress.Security.EscapeOutput.OutputNotEscaped" />
 		<exclude name="WordPress.Security.NonceVerification.Missing" />
 
 	</rule>
@@ -46,6 +44,9 @@
 	<!-- Nesting levels. -->
 	<rule ref="Generic.Metrics.NestingLevel">
 		<properties>
+			<!-- Warning level. -->
+            <property name="nestingLevel" value="4"/>
+			<!-- Error level. -->
 			<property name="absoluteNestingLevel" value="5" />
 		</properties>
 	</rule>

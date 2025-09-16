@@ -191,7 +191,7 @@ function poets_connections_get_poet_avatar() {
 
 			// Show Primary avatar but link to Poet.
 			?>
-			<a href="<?php echo get_permalink( $connected_poet->ID ); ?>"><?php bp_activity_avatar(); ?></a>
+			<a href="<?php echo esc_url( get_permalink( $connected_poet->ID ) ); ?>"><?php bp_activity_avatar(); ?></a>
 			<?php
 
 			// We're done.
@@ -380,7 +380,7 @@ function poets_connections_poet_avatar_render( $primary_poet, $poet ) {
 
 		// Show Primary avatar but link to Poet.
 		?>
-		<a href="<?php echo get_permalink( $poet->ID ); ?>"><?php bp_activity_avatar(); ?></a>
+		<a href="<?php echo esc_url( get_permalink( $poet->ID ) ); ?>"><?php bp_activity_avatar(); ?></a>
 		<?php
 
 		// We're done.
@@ -398,6 +398,7 @@ function poets_connections_poet_avatar_render( $primary_poet, $poet ) {
 		if ( ! empty( $post_thumbnail ) ) {
 
 			// Show it.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '<a href="' . esc_url( get_permalink( $poet->ID ) ) . '">' . $post_thumbnail . '</a>';
 
 			// We're done.
@@ -410,8 +411,9 @@ function poets_connections_poet_avatar_render( $primary_poet, $poet ) {
 	// Fall back to mystery man.
 	$src = POETS_CONNECTIONS_URL . '/assets/images/subbuteo-shakespeare-mid.jpg';
 	/* translators: %s: The name of the Poet. */
-	$alt            = sprintf( __( 'Profile picture of %s', 'poets-connections' ), get_the_title( $poet ) );
-	$post_thumbnail = '<img src="' . $src . '" class="avatar avatar-50" width="50" height="50" alt="' . $alt . '" />';
+	$alt            = sprintf( esc_html__( 'Profile picture of %s', 'poets-connections' ), get_the_title( $poet ) );
+	$post_thumbnail = '<img src="' . esc_url( $src ) . '" class="avatar avatar-50" width="50" height="50" alt="' . esc_attr( $alt ) . '" />';
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo '<a href="' . esc_url( get_permalink( $poet ) ) . '">' . $post_thumbnail . '</a>';
 
 }

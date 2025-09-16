@@ -31,12 +31,12 @@ defined( 'ABSPATH' ) || exit;
 			<?php endif; ?>
 			</p>
 		</div>
-		<input type="hidden" id="claiming_user_id" value="<?php echo get_current_user_id(); ?>" />
+		<input type="hidden" id="claiming_user_id" value="<?php echo esc_attr( get_current_user_id() ); ?>" />
 		<input type="hidden" id="poet_id" value="<?php echo get_the_ID(); ?>" />
 		<p class="claim_actions">
 			<input id="claim_submit" type="submit" value="<?php esc_attr_e( 'Claim this profile', 'poets-connections' ); ?>" />
 			<?php if ( $show_primary ) : ?>
-				<a href="<?php echo $profile_edit_link; ?>" class="create-new-profile"><?php esc_html_e( 'Create new profile', 'poets-connections' ); ?></a>
+				<a href="<?php echo esc_url( $profile_edit_link ); ?>" class="create-new-profile"><?php esc_html_e( 'Create new profile', 'poets-connections' ); ?></a>
 				<input type="hidden" id="claim_stop" value="no" />
 			<?php else : ?>
 				<a href="#" id="claim_stop" class="button"><?php esc_html_e( 'Stop claiming profiles', 'poets-connections' ); ?></a>

@@ -311,7 +311,7 @@ class Poets_Connections_Claim {
 
 		// Get Claim type.
 		$claim_type = isset( $_POST['claim_type'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_type'] ) ) : null;
-		if ( is_null( $claim_type ) || ! in_array( $claim_type, [ 'primary', 'standard' ] ) ) {
+		if ( is_null( $claim_type ) || ! in_array( $claim_type, [ 'primary', 'standard' ], true ) ) {
 			$data['error'] = __( 'Oh dear, something went wrong. No claim type was received.', 'poets-connections' );
 		}
 
@@ -417,7 +417,7 @@ class Poets_Connections_Claim {
 
 		// Get Claim stop.
 		$claim_stop = isset( $_POST['claim_stop'] ) ? sanitize_text_field( wp_unslash( $_POST['claim_stop'] ) ) : null;
-		if ( is_null( $claim_stop ) || ! in_array( $claim_stop, [ 'yes' ] ) ) {
+		if ( is_null( $claim_stop ) || ! in_array( $claim_stop, [ 'yes' ], true ) ) {
 			$data['error'] = __( 'Oh dear, something went wrong. No claim stopping flag was received.', 'poets-connections' );
 		}
 
@@ -621,7 +621,7 @@ class Poets_Connections_Claim {
 
 		// Get resolution.
 		$decision = isset( $_POST['resolution'] ) ? sanitize_text_field( wp_unslash( $_POST['resolution'] ) ) : null;
-		if ( is_null( $decision ) || ! in_array( $decision, [ 'accept', 'reject' ] ) ) {
+		if ( is_null( $decision ) || ! in_array( $decision, [ 'accept', 'reject' ], true ) ) {
 			$data['error'] = __( 'Oh dear, something went wrong. No decision was received.', 'poets-connections' );
 		}
 
@@ -860,11 +860,24 @@ class Poets_Connections_Claim {
 		// Get existing Poet IDs.
 		$claimed_poet_ids = bp_get_user_meta( $user_id, $this->plugin->config->claim_key, true );
 
+		// Make sure we get an array.
+		if ( ! is_array( $claimed_poet_ids ) ) {
+			$claimed_poet_ids = [];
+		}
+
+		// Make sure array contains integers.
+		array_walk(
+			$claimed_poet_ids,
+			function( &$item ) {
+				$item = (int) $item;
+			}
+		);
+
 		// Add Poet if not already there, otherwise init array.
-		if ( is_array( $claimed_poet_ids ) && ! in_array( $poet_id, $claimed_poet_ids ) ) {
-			$claimed_poet_ids[] = $poet_id;
+		if ( ! in_array( (int) $poet_id, $claimed_poet_ids, true ) ) {
+			$claimed_poet_ids[] = (int) $poet_id;
 		} else {
-			$claimed_poet_ids = [ $poet_id ];
+			$claimed_poet_ids = [ (int) $poet_id ];
 		}
 
 		// Update the User's Claims.
@@ -976,8 +989,21 @@ class Poets_Connections_Claim {
 		// Get existing Poet IDs.
 		$claimed_poet_ids = bp_get_user_meta( $user_id, $this->plugin->config->claim_key, true );
 
+		// Make sure we get an array.
+		if ( ! is_array( $claimed_poet_ids ) ) {
+			$claimed_poet_ids = [];
+		}
+
+		// Make sure array contains integers.
+		array_walk(
+			$claimed_poet_ids,
+			function( &$item ) {
+				$item = (int) $item;
+			}
+		);
+
 		// If this Poet is already in usermeta array.
-		if ( is_array( $claimed_poet_ids ) && in_array( $poet_id, $claimed_poet_ids ) ) {
+		if ( in_array( (int) $poet_id, $claimed_poet_ids, true ) ) {
 
 			// Remove Poet.
 			$claimed_poet_ids = array_diff( $claimed_poet_ids, [ $poet_id ] );

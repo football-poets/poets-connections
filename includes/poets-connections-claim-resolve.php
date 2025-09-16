@@ -254,7 +254,7 @@ class Poets_Connections_Resolve_Form {
 
 		// Get resolution.
 		$decision = isset( $_POST['resolution'] ) ? sanitize_text_field( wp_unslash( $_POST['resolution'] ) ) : null;
-		if ( is_null( $decision ) || ! in_array( $decision, [ 'accept', 'reject' ] ) ) {
+		if ( is_null( $decision ) || ! in_array( $decision, [ 'accept', 'reject' ], true ) ) {
 			$data['error'] = __( 'Oh dear, something went wrong. No decision was received.', 'poets-connections' );
 		}
 
@@ -555,11 +555,24 @@ class Poets_Connections_Resolve_Form {
 		// Get existing Poet IDs.
 		$claimed_poet_ids = bp_get_user_meta( $user_id, '_poet_connections_' . $this->plugin->config->claim_key, true );
 
+		// Make sure we get an array.
+		if ( ! is_array( $claimed_poet_ids ) ) {
+			$claimed_poet_ids = [];
+		}
+
+		// Make sure array contains integers.
+		array_walk(
+			$claimed_poet_ids,
+			function( &$item ) {
+				$item = (int) $item;
+			}
+		);
+
 		// If already in usermeta array.
-		if ( is_array( $claimed_poet_ids ) && in_array( $claimed_poet_ids ) ) {
+		if ( in_array( (int) $poet_id, $claimed_poet_ids, true ) ) {
 
 			// Remove Poet.
-			$claimed_poet_ids = array_diff( $claimed_poet_ids, [ $poet_id ] );
+			$claimed_poet_ids = array_diff( $claimed_poet_ids, [ (int) $poet_id ] );
 
 			// If there are none left.
 			if ( count( $claimed_poet_ids ) === 0 ) {
