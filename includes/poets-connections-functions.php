@@ -154,17 +154,6 @@ function poets_connections_get_poet_avatar() {
 		$activities_template->activity->current_comment :
 		$activities_template->activity;
 
-	/*
-	// Logging.
-	$e = new \Exception();
-	$trace = $e->getTraceAsString();
-	error_log( print_r( [
-		'method' => __METHOD__,
-		'current_activity_item' => $current_activity_item,
-		//'backtrace' => $trace,
-	], true ) );
-	*/
-
 	// Filter Poems.
 	if ( 'new_poem' === $current_activity_item->type ) {
 		poets_connections_get_poet_avatar_poem_new( $current_activity_item );
@@ -220,17 +209,6 @@ function poets_connections_get_poet_avatar_poem_new( $item ) {
 	// Get Poet IDs.
 	$poets = poets_connections_get_poets_for_poem( $item->secondary_item_id );
 
-	/*
-	// Logging.
-	$e = new \Exception();
-	$trace = $e->getTraceAsString();
-	error_log( print_r( [
-		'method' => __METHOD__,
-		'poets' => $poets,
-		//'backtrace' => $trace,
-	], true ) );
-	*/
-
 	// Sanity check.
 	if ( ! empty( $poets ) ) {
 
@@ -239,17 +217,6 @@ function poets_connections_get_poet_avatar_poem_new( $item ) {
 
 		// Get User's Primary Poet.
 		$primary_poet = poets_connections()->config->get_primary_poet( $item->user_id );
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'poets' => $poets,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Show the avatar if it has one.
 		poets_connections_poet_avatar_render( $primary_poet, $poet );

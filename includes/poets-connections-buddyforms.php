@@ -328,18 +328,6 @@ class Poets_Connections_BuddyForms {
 		// Add to form.
 		$form->addElement( $element );
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'form' => $form,
-			'form_args' => $form_args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $form;
 
@@ -362,19 +350,6 @@ class Poets_Connections_BuddyForms {
 
 		// Get Poet ID.
 		$poet_id = isset( $_POST['publish_as'] ) ? (int) sanitize_text_field( wp_unslash( $_POST['publish_as'] ) ) : 0;
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'POST' => $_POST,
-			'poem_id' => $poem_id,
-			'poet_id' => $poet_id,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Sanity check.
 		if ( empty( $poet_id ) ) {
@@ -410,19 +385,6 @@ class Poets_Connections_BuddyForms {
 		if ( 'poemtag' !== $customfield['taxonomy'] ) {
 			return $title;
 		}
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'title' => $title,
-			'form_slug' => $form_slug,
-			'customfield' => $customfield,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		$title = __( 'Create a new tag', 'poets-connections' );
 

@@ -305,17 +305,6 @@ class Poets_Connections_Claim {
 			'status'  => '',
 		];
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'_POST' => $_POST,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get claiming User ID.
 		$user_id = isset( $_POST['claiming_user_id'] ) ? (int) sanitize_text_field( wp_unslash( $_POST['claiming_user_id'] ) ) : null;
 		if ( is_null( $user_id ) || ! is_int( $user_id ) ) {
@@ -345,20 +334,6 @@ class Poets_Connections_Claim {
 		if ( is_null( $claim_type ) || ! in_array( $claim_type, [ 'primary', 'standard' ], true ) ) {
 			$data['error'] = __( 'Oh dear, something went wrong. No claim type was received.', 'poets-connections' );
 		}
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'_POST' => $_POST,
-			'user_id' => $user_id,
-			'poet_id' => $poet_id,
-			'claim_type' => $claim_type,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Build message components if there's no error.
 		if ( empty( $data['error'] ) ) {
@@ -390,18 +365,6 @@ class Poets_Connections_Claim {
 
 		}
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'POST' => $_POST,
-			'data' => $data,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Send data to browser.
 		if ( wp_doing_ajax() ) {
 			wp_send_json( $data );
@@ -422,17 +385,6 @@ class Poets_Connections_Claim {
 			'error'   => '',
 			'status'  => '',
 		];
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'_POST' => $_POST,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Get claiming User ID.
 		$user_id = isset( $_POST['claiming_user_id'] ) ? (int) sanitize_text_field( wp_unslash( $_POST['claiming_user_id'] ) ) : null;
@@ -470,18 +422,6 @@ class Poets_Connections_Claim {
 			$data['status'] = __( 'Please reload the page and try again.', 'poets-connections' );
 
 		}
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'POST' => $_POST,
-			'data' => $data,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Send data to browser.
 		if ( wp_doing_ajax() ) {
@@ -615,17 +555,6 @@ class Poets_Connections_Claim {
 			'status'  => '',
 		];
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'POST' => $_POST,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get claiming User ID.
 		$user_id = isset( $_POST['claiming_user_id'] ) ? absint( $_POST['claiming_user_id'] ) : null;
 		if ( is_null( $user_id ) || ! is_int( $user_id ) ) {
@@ -730,18 +659,6 @@ class Poets_Connections_Claim {
 
 		}
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'POST' => $_POST,
-			'data' => $data,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Send data to browser.
 		if ( wp_doing_ajax() ) {
 			wp_send_json( $data );
@@ -839,18 +756,6 @@ class Poets_Connections_Claim {
 		if ( empty( $user_id ) ) {
 			return;
 		}
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'POST' => $_POST,
-			'user_id' => $user_id,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Get choice.
 		$choice = sanitize_text_field( wp_unslash( $_POST['claim_resolved'] ) );
@@ -1103,17 +1008,6 @@ class Poets_Connections_Claim {
 			'paged'           => $step,
 		];
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'query_args' => $query_args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// The query.
 		$query = new WP_Query( $query_args );
 
@@ -1126,17 +1020,6 @@ class Poets_Connections_Claim {
 			// Loop and set up Post.
 			while ( $query->have_posts() ) {
 				$query->the_post();
-
-				/*
-				// Logging.
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( [
-					'method' => __METHOD__,
-					'updating' => get_the_ID(),
-					//'backtrace' => $trace,
-				], true ) );
-				*/
 
 				// Assign author.
 				$args = [
@@ -1190,17 +1073,6 @@ class Poets_Connections_Claim {
 		if ( $query->have_posts() ) {
 			while ( $query->have_posts() ) {
 				$query->the_post();
-
-				/*
-				// Logging.
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( [
-					'method' => __METHOD__,
-					'updating' => get_the_ID(),
-					//'backtrace' => $trace,
-				], true ) );
-				*/
 
 				// Make the User the author.
 				$args = [
@@ -1326,17 +1198,6 @@ class Poets_Connections_Claim {
 			'subject'    => $subject,
 			'content'    => $content,
 		];
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'message_args' => $message_args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Send now.
 		messages_new_message( $message_args );

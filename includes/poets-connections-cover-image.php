@@ -155,17 +155,6 @@ class Poets_Connections_Cover_Image {
 			return;
 		}
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'params' => $params,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Avatar height - padding - 1/2 avatar height.
 		$avatar_offset = $params['height'] - 5 - round( (int) bp_core_avatar_full_height() / 2 );
 
@@ -410,19 +399,6 @@ class Poets_Connections_Cover_Image {
 			$has_image = true;
 		}
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'has_image' => $has_image,
-			'user' => $user,
-			'cover_image_url' => $this->cover_image_url,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $has_image;
 
@@ -443,19 +419,6 @@ class Poets_Connections_Cover_Image {
 		if ( empty( $this->cover_image_url ) ) {
 			return $html;
 		}
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'html' => $html,
-			'post' => $post,
-			'cover_image_url' => $this->cover_image_url,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Construct new HTML for the image.
 		$html = '<img src="' . $this->cover_image_url . '" class="wp-post-image" />';

@@ -331,19 +331,6 @@ class Poets_Connections_Comments {
 
 		}
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'activity' => $activity,
-			'poet_id' => $poet_id,
-			'poet' => $poet,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 	}
 
 	/**
@@ -410,20 +397,6 @@ class Poets_Connections_Comments {
 			get_blog_option( $activity->item_id, 'blogname' )
 		);
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'activity' => $activity,
-			'poet_id' => $poet_id,
-			'poet' => $poet,
-			'action' => $action,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $action;
 
@@ -444,18 +417,6 @@ class Poets_Connections_Comments {
 
 		// Get type of activity.
 		$type = bp_get_activity_action_name();
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'link' => $link,
-			'type' => $type,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		return $link;
 
@@ -612,22 +573,6 @@ class Poets_Connections_Comments {
 	 */
 	public function override_comment_avatar( $avatar, $comment, $size, $default, $alt = '', $args = [] ) {
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'avatar' => $avatar,
-			'user' => $user,
-			'size' => $size,
-			'default' => $default,
-			'alt' => $alt,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail if not a comment avatar request.
 		if ( ! ( $comment instanceof WP_Comment ) ) {
 			return $avatar;
@@ -656,19 +601,6 @@ class Poets_Connections_Comments {
 		if ( ! ( $primary_poet instanceof WP_Post ) ) {
 			return $avatar;
 		}
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'poet_id' => $poet_id,
-			'poet' => $poet,
-			'primary_poet' => $primary_poet,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// If this is the Primary Poet keep Profile avatar.
 		if ( $poet->ID === $primary_poet->ID ) {

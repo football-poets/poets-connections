@@ -248,17 +248,6 @@ class Poets_Connections_Resolve_Form {
 			'status'  => '',
 		];
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'POST' => $_POST,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get claiming User ID.
 		$user_id = isset( $_POST['claiming_user_id'] ) ? absint( $_POST['claiming_user_id'] ) : null;
 		if ( is_null( $user_id ) || ! is_int( $user_id ) ) {
@@ -366,18 +355,6 @@ class Poets_Connections_Resolve_Form {
 
 		}
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'POST' => $_POST,
-			'data' => $data,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Send data to browser.
 		if ( wp_doing_ajax() ) {
 			wp_send_json( $data );
@@ -469,18 +446,6 @@ class Poets_Connections_Resolve_Form {
 		if ( empty( $user_id ) ) {
 			return;
 		}
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'POST' => $_POST,
-			'user_id' => $user_id,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Get choice.
 		$choice = sanitize_text_field( wp_unslash( $_POST['claim_resolved'] ) );
@@ -666,17 +631,6 @@ class Poets_Connections_Resolve_Form {
 			'paged'           => $step,
 		];
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'query_args' => $query_args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// The query.
 		$query = new WP_Query( $query_args );
 
@@ -689,17 +643,6 @@ class Poets_Connections_Resolve_Form {
 			// Loop and set up Post.
 			while ( $query->have_posts() ) {
 				$query->the_post();
-
-				/*
-				// Logging.
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( [
-					'method' => __METHOD__,
-					'updating' => get_the_ID(),
-					//'backtrace' => $trace,
-				], true ) );
-				*/
 
 				// Assign author.
 				$args = [
@@ -768,17 +711,6 @@ class Poets_Connections_Resolve_Form {
 			'subject'    => $subject,
 			'content'    => $content,
 		];
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'message_args' => $message_args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Send now.
 		messages_new_message( $message_args );
@@ -875,17 +807,6 @@ class Poets_Connections_Resolve_Form {
 		if ( $query->have_posts() ) {
 			while ( $query->have_posts() ) {
 				$query->the_post();
-
-				/*
-				// Logging.
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( [
-					'method' => __METHOD__,
-					'updating' => get_the_ID(),
-					//'backtrace' => $trace,
-				], true ) );
-				*/
 
 				// Make the User the author.
 				$args = [

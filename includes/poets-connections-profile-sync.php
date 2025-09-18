@@ -175,19 +175,6 @@ class Poets_Connections_Profile_Sync {
 		add_action( 'bp_before_profile_field_content', [ $this, 'wrapper_open' ] );
 		add_action( 'bp_after_profile_field_content', [ $this, 'wrapper_close' ] );
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'has_groups' => $has_groups,
-			'profile_template' => $profile_template,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 	}
 
 	/**
@@ -390,21 +377,6 @@ class Poets_Connections_Profile_Sync {
 
 		}
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'user_id' => $user_id,
-			'posted_field_ids' => $posted_field_ids,
-			'errors' => $errors,
-			'poet' => $poet,
-			//'content' => $content,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Make sure we have an array.
 		if ( ! is_array( $posted_field_ids ) ) {
 			$posted_field_ids = [];
@@ -572,18 +544,6 @@ class Poets_Connections_Profile_Sync {
 	 */
 	public function filter_profile_update( $action, $activity ) {
 
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'action' => $action,
-			'activity before' => $activity,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Does this User have a Primary Poet?
 		$connected_poet = $this->plugin->config->get_primary_poet( $activity->user_id );
 
@@ -602,17 +562,6 @@ class Poets_Connections_Profile_Sync {
 			);
 
 		}
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'activity after' => $activity,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return $action;
@@ -633,21 +582,6 @@ class Poets_Connections_Profile_Sync {
 
 		// Get BuddyPress object.
 		$bp = buddypress();
-
-		/*
-		// Logging.
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'user' => $user,
-			//'logged_in' => $logged_in ? 'y' : 'n',
-			//'member_type' => $member_type,
-			'bp->members->nav' => $bp->members->nav,
-			//'unset' => $unset,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Init unset list.
 		$unset = [];
@@ -675,20 +609,6 @@ class Poets_Connections_Profile_Sync {
 
 					// Resave.
 					$bp->members->nav->edit_nav( [ 'name' => $title ], $item );
-
-				} else { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedElse
-
-					/*
-					// Logging.
-					$e = new \Exception();
-					$trace = $e->getTraceAsString();
-					error_log( print_r( [
-						'method' => __METHOD__,
-						'item' => $item,
-						'bp->members->nav' => $bp->members->nav,
-						//'backtrace' => $trace,
-					], true ) );
-					*/
 
 				}
 
