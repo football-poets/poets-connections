@@ -18,11 +18,6 @@ defined( 'ABSPATH' ) || exit;
 // Set our version here.
 define( 'POETS_CONNECTIONS_VERSION', '0.3.2a' );
 
-// Set our debug flag here.
-if ( ! defined( 'POETS_CONNECTIONS_DEBUG' ) ) {
-	define( 'POETS_CONNECTIONS_DEBUG', false );
-}
-
 // Store reference to this file.
 if ( ! defined( 'POETS_CONNECTIONS_FILE' ) ) {
 	define( 'POETS_CONNECTIONS_FILE', __FILE__ );
@@ -108,10 +103,38 @@ class Poets_Connections_Plugin {
 	 */
 	public function __construct() {
 
+		// Initialise when all plugins are loaded.
+		add_action( 'plugins_loaded', [ $this, 'initialise' ] );
+
+	}
+
+	/**
+	 * Initialises this plugin.
+	 *
+	 * @since 0.1
+	 */
+	public function initialise() {
+
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && true === $done ) {
+			return;
+		}
+
 		// Bootstrap plugin.
 		$this->include_files();
 		$this->setup_globals();
 		$this->register_hooks();
+
+		/**
+		 * Broadcast that this plugin is now loaded.
+		 *
+		 * @since 0.3.2
+		 */
+		do_action( 'poets_connections/loaded' );
+
+		// We're done.
+		$done = true;
 
 	}
 
@@ -120,16 +143,16 @@ class Poets_Connections_Plugin {
 	 *
 	 * @since 0.1
 	 */
-	public function include_files() {
+	private function include_files() {
 
 		// Include class files.
-		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-config.php';
-		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-claim.php';
-		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-profile-sync.php';
-		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-cover-image.php';
-		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-buddyforms.php';
-		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-comments.php';
-		include_once POETS_CONNECTIONS_PATH . 'includes/poets-connections-functions.php';
+		include POETS_CONNECTIONS_PATH . 'includes/poets-connections-config.php';
+		include POETS_CONNECTIONS_PATH . 'includes/poets-connections-claim.php';
+		include POETS_CONNECTIONS_PATH . 'includes/poets-connections-profile-sync.php';
+		include POETS_CONNECTIONS_PATH . 'includes/poets-connections-cover-image.php';
+		include POETS_CONNECTIONS_PATH . 'includes/poets-connections-buddyforms.php';
+		include POETS_CONNECTIONS_PATH . 'includes/poets-connections-comments.php';
+		include POETS_CONNECTIONS_PATH . 'includes/poets-connections-functions.php';
 
 	}
 
@@ -138,7 +161,7 @@ class Poets_Connections_Plugin {
 	 *
 	 * @since 0.1
 	 */
-	public function setup_globals() {
+	private function setup_globals() {
 
 		// Instatiate objects.
 		$this->config       = new Poets_Connections_Config( $this );
@@ -155,10 +178,10 @@ class Poets_Connections_Plugin {
 	 *
 	 * @since 0.1
 	 */
-	public function register_hooks() {
+	private function register_hooks() {
 
 		// Always use translation.
-		add_action( 'plugins_loaded', [ $this, 'translation' ] );
+		add_action( 'init', [ $this, 'translation' ] );
 
 		// Register hooks in classes.
 		$this->config->register_hooks();
@@ -215,7 +238,7 @@ class Poets_Connections_Plugin {
 	public function log_error( $data = [] ) {
 
 		// Skip if not debugging.
-		if ( POETS_CONNECTIONS_DEBUG === false ) {
+		if ( WP_DEBUG === false ) {
 			return;
 		}
 
@@ -244,11 +267,18 @@ class Poets_Connections_Plugin {
  * @return Poets_Connections_Plugin $plugin The plugin object.
  */
 function poets_connections() {
-	static $plugin;
-	if ( ! isset( $plugin ) ) {
+
+	// Store instance in static variable.
+	static $plugin = false;
+
+	// Maybe return instance.
+	if ( false === $plugin ) {
 		$plugin = new Poets_Connections_Plugin();
 	}
+
+	// --<
 	return $plugin;
+
 }
 
 // Bootstrap plugin immediately.
