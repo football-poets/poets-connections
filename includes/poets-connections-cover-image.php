@@ -61,14 +61,45 @@ class Poets_Connections_Cover_Image {
 		// Store reference to plugin.
 		$this->plugin = $plugin;
 
+		// Init when this plugin is loaded.
+		add_action( 'poets_connections/loaded', [ $this, 'initialise' ] );
+
 	}
 
 	/**
-	 * Register WordPress hooks.
+	 * Initialises this class.
+	 *
+	 * @since 0.3.2
+	 */
+	public function initialise() {
+
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && true === $done ) {
+			return;
+		}
+
+		// Bootstrap class.
+		$this->register_hooks();
+
+		/**
+		 * Broadcast that this class is now loaded.
+		 *
+		 * @since 0.3.2
+		 */
+		do_action( 'poets_connections/cover_image/loaded' );
+
+		// We're done.
+		$done = true;
+
+	}
+
+	/**
+	 * Register hook callbacks.
 	 *
 	 * @since 0.1
 	 */
-	public function register_hooks() {
+	private function register_hooks() {
 
 		// Filter the Cover Image settings.
 		$bp_version = bp_get_version();

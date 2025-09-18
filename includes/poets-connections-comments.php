@@ -57,14 +57,45 @@ class Poets_Connections_Comments {
 		// Store reference to plugin.
 		$this->plugin = $plugin;
 
+		// Init when this plugin is loaded.
+		add_action( 'poets_connections/loaded', [ $this, 'initialise' ] );
+
 	}
 
 	/**
-	 * Register WordPress hooks.
+	 * Initialises this class.
+	 *
+	 * @since 0.3.2
+	 */
+	public function initialise() {
+
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && true === $done ) {
+			return;
+		}
+
+		// Bootstrap class.
+		$this->register_hooks();
+
+		/**
+		 * Broadcast that this class is now loaded.
+		 *
+		 * @since 0.3.2
+		 */
+		do_action( 'poets_connections/comments/loaded' );
+
+		// We're done.
+		$done = true;
+
+	}
+
+	/**
+	 * Register hook callbacks.
 	 *
 	 * @since 0.3
 	 */
-	public function register_hooks() {
+	private function register_hooks() {
 
 		// Add our dropdown (or hidden input) to comment form.
 		add_filter( 'comment_id_fields', [ $this, 'get_comment_profile_selector' ], 10, 3 );

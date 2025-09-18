@@ -183,14 +183,6 @@ class Poets_Connections_Plugin {
 		// Always use translation.
 		add_action( 'init', [ $this, 'translation' ] );
 
-		// Register hooks in classes.
-		$this->config->register_hooks();
-		$this->claim->register_hooks();
-		$this->profile_sync->register_hooks();
-		$this->cover_image->register_hooks();
-		$this->buddyforms->register_hooks();
-		$this->comments->register_hooks();
-
 	}
 
 	/**
