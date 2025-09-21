@@ -614,11 +614,6 @@ class Poets_Connections_Profile_Sync {
 
 			}
 
-			// Never hide items from super admins.
-			if ( is_super_admin() ) {
-				continue;
-			}
-
 			// Item specific.
 			switch ( $item ) {
 
@@ -643,15 +638,23 @@ class Poets_Connections_Profile_Sync {
 							$unset[] = $item;
 						}
 					} else {
-						// Remove if displayed User has no Primary Poet.
-						if ( false === $this->plugin->config->get_primary_poet( bp_displayed_user_id() ) ) {
-							$unset[] = $item;
-						}
+						// Remove to protect Poet Profiles.
+						$unset[] = $item;
 					}
 					break;
 
 			}
 
+		}
+
+		// Never hide items from super admins.
+		if ( is_super_admin() ) {
+			return;
+		}
+
+		// Never hide items from editors.
+		if ( current_user_can( 'edit_posts' ) ) {
+			return;
 		}
 
 		// Remove items completely.
