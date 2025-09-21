@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 		<?php
 		echo sprintf(
 			/* translators: 1: The opening em tag, 2: The closing em tag. */
-			esc_html__( 'It looks like you haven\'t got a primary profile as a poet yet. To publish poems on this site, you\'re going to need one so people know who you are. Once you\'ve created (or claimed) a primary profile, you\'ll be able to create (or claim) as many %1$snoms de plume%2$s (pen names) as you like. The real identity of your %1$snoms de plume%2$s will only be known by you the site editors. %1$sSo let\'s get started!%2$s', 'poets-connections' ),
+			esc_html__( 'It looks like you haven\'t got a primary profile as a poet yet. To publish poems on this site, you\'re going to need one so people know who you are. Once you\'ve created (or claimed) a primary profile, you\'ll be able to create (or claim) as many %1$snoms de plume%2$s (pen names) as you like. The real identity of your %1$snoms de plume%2$s will only be known to you and the site editors. %1$sSo let\'s get started!%2$s', 'poets-connections' ),
 			'<em>',
 			'</em>'
 		);
